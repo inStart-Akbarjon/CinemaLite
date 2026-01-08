@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaLite.Api", "CinemaLite.Api\CinemaLite.Api.csproj", "{F25A331B-D155-4F02-B5C4-D34A9AFBE924}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src/CinemaLite.Api", "src/CinemaLite.Api\CinemaLite.Api.csproj", "{F25A331B-D155-4F02-B5C4-D34A9AFBE924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaLite.Domain", "CinemaLite.Domain\CinemaLite.Domain.csproj", "{B38D7FE3-2458-40D5-8D88-D1F895E9F8DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src/CinemaLite.Domain", "src/CinemaLite.Domain\CinemaLite.Domain.csproj", "{B38D7FE3-2458-40D5-8D88-D1F895E9F8DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaLite.Application", "CinemaLite.Application\CinemaLite.Application.csproj", "{BAA19056-2EA4-4561-B9DD-AEBD7EE5D915}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src/CinemaLite.Application", "src/CinemaLite.Application\CinemaLite.Application.csproj", "{BAA19056-2EA4-4561-B9DD-AEBD7EE5D915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaLite.Infrastructure", "CinemaLite.Infrastructure\CinemaLite.Infrastructure.csproj", "{1BBE1A14-58E1-437B-95FF-6B07A1A66706}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src/CinemaLite.Infrastructure", "src/CinemaLite.Infrastructure\CinemaLite.Infrastructure.csproj", "{1BBE1A14-58E1-437B-95FF-6B07A1A66706}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
