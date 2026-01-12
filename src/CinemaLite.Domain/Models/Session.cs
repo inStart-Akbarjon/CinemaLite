@@ -6,5 +6,4 @@ public class Session : BaseEntity
     public required string CinemaName { get; set; }
     public required int AvailableSeats { get; set; }
     public required int MovieId { get; set; }
-    public Movie? Movie { get; set; }
 }
