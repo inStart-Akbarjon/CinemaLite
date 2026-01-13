@@ -1,0 +1,20 @@
+﻿using CinemaLite.Application.CQRS.Auth.Login.Commands;
+using FluentValidation;
+
+namespace CinemaLite.Application.CQRS.Auth.Login.Validators;
+
+public class LoginCustomerCommandValidator : AbstractValidator<LoginCommand>
+{
+    public LoginCustomerCommandValidator()
+    {
+        RuleFor(c => c.Email)
+            .Must(email => email.Contains("@"))
+            .WithMessage("Invalid email address.")
+            .NotEmpty()
+            .WithMessage("Email is required.");
+
+        RuleFor(c => c.Password)
+            .NotEmpty()
+            .WithMessage("Password is required.");
+    }
+}
