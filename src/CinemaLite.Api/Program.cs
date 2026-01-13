@@ -1,4 +1,3 @@
-using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Infrastructure.Database.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

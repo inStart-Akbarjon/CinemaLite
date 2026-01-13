@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using CinemaLite.Domain.Models;
-using CinemaLite.Infrastructure.Data;
+using CinemaLite.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
