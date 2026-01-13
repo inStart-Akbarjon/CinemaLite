@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CinemaLite.Infrastructure.Configurations;
+namespace CinemaLite.Infrastructure.Database.Configurations;
 
 public class TicketModelConfiguration : IEntityTypeConfiguration<Ticket>
 {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace CinemaLite.Infrastructure.Interceptors;
+namespace CinemaLite.Infrastructure.Database.Interceptors;
 
 public class AuditInterceptor : SaveChangesInterceptor
 {
@@ -12,7 +12,11 @@ public class AuditInterceptor : SaveChangesInterceptor
         CancellationToken cancellationToken = new CancellationToken())
     {
         var context = eventData.Context;
-        if (context is null) return base.SavingChangesAsync(eventData, result, cancellationToken);
+        
+        if (context is null)
+        {
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
         
         var entries = context.ChangeTracker.Entries<BaseEntity>();
         var now = DateTime.UtcNow;

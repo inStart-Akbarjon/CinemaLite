@@ -1,17 +1,19 @@
-﻿using CinemaLite.Domain.Models;
-using CinemaLite.Infrastructure.Data;
+﻿using CinemaLite.Application.Interfaces.DbContext;
+using CinemaLite.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 
-namespace CinemaLite.Infrastructure.Extensions;
+namespace CinemaLite.Infrastructure.Database.Extensions;
 
 public static class DatabaseConnectionExtension
 {
-    public static IServiceCollection AddDbConnection(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IAppDbContext, AppDbContext>();
+        
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(
             configuration.GetConnectionString("DefaultConnection")
         );
