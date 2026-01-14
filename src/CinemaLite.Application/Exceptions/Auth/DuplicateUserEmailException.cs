@@ -1,6 +1,14 @@
-﻿namespace CinemaLite.Application.Exceptions.Auth;
+﻿using CinemaLite.Application.Exceptions.Abstract;
+using Microsoft.AspNetCore.Http;
 
-public class DuplicateUserEmailException(string email) : Exception($"User with this email '{email}' already exists.")
+namespace CinemaLite.Application.Exceptions.Auth;
+
+public class DuplicateUserEmailException : AppException
 {
-    
+    public DuplicateUserEmailException(string email) : base(
+        message: $"User with this email '{email}' already exists.", 
+        statusCode: StatusCodes.Status400BadRequest, 
+        errorCode: "Duplicating User Email")
+    {
+    }
 }

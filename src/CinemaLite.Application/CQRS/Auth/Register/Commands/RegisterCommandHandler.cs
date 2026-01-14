@@ -1,34 +1,22 @@
-﻿using CinemaLite.Application.DTOs.Auth.Registration.Respone;
-using CinemaLite.Application.Exceptions.Auth;
-using CinemaLite.Application.Exceptions.Validation;
+﻿using CinemaLite.Application.Exceptions.Auth;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Services.Interfaces.Auth;
-using CinemaLite.Domain.Models;
-using FluentValidation;
-using MediatR;
+using CinemaLite.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using CinemaLite.Domain.Models;
+using MediatR;
 
 namespace CinemaLite.Application.CQRS.Auth.Register.Commands;
 
 public class RegisterCommandHandler(
     IPasswordHasherService passwordHasherService,
     IAuthMapper authMapper,
-    UserManager<ApplicationUser> userManager,
-    IValidator<RegisterCommand> validator
-) : IRequestHandler<RegisterCommand, RegisterApplicationUserResponse>
+    UserManager<ApplicationUser> userManager
+) : IRequestHandler<RegisterCommand, IActionResult>
 {
-    public async Task<RegisterApplicationUserResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            foreach (var failure in validationResult.Errors)
-            {
-                throw new InvalidRequestException(failure.ErrorMessage);
-            }
-        }
-        
         var duplicateUser = await userManager.FindByEmailAsync(request.Email);
         
         if (duplicateUser != null)
@@ -42,14 +30,10 @@ public class RegisterCommandHandler(
         
         applicationUserEntity.PasswordHash = hashedPassword;
         
-        var result = await userManager.CreateAsync(applicationUserEntity);
+        await userManager.CreateAsync(applicationUserEntity);
         
-        if (!result.Succeeded)
-            throw new InvalidOperationException(
-                string.Join("; ", result.Errors.Select(e => e.Description)));
-        
-        await userManager.AddToRoleAsync(applicationUserEntity, "Customer");
-        
-        return authMapper.ToRegisterApplicationUserResponse(result.Succeeded);
+        await userManager.AddToRoleAsync(applicationUserEntity, nameof(UserRole.Customer));
+
+        return new OkResult();
     }
 }

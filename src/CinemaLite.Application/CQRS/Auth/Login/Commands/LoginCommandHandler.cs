@@ -1,13 +1,12 @@
 ﻿using CinemaLite.Application.DTOs.Auth.Login.Respone;
-using CinemaLite.Application.Exceptions.Auth;
-using CinemaLite.Application.Exceptions.Validation;
-using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Services.Interfaces.Auth;
-using CinemaLite.Domain.Models;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
+using CinemaLite.Application.Interfaces.Mappers;
+using CinemaLite.Application.Exceptions.Auth;
+using CinemaLite.Domain.Enums;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+using CinemaLite.Domain.Models;
+using MediatR;
 
 namespace CinemaLite.Application.CQRS.Auth.Login.Commands;
 
@@ -16,22 +15,11 @@ public class LoginCommandHandler(
     IPasswordHasherService passwordHasherService,
     IAuthMapper authMapper,
     UserManager<ApplicationUser> userManager,
-    IConfiguration configuration,
-    IValidator<LoginCommand> validator
+    IConfiguration configuration
 ) : IRequestHandler<LoginCommand, LoginApplicationUserResponse>
 {
     public async Task<LoginApplicationUserResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            foreach (var failure in validationResult.Errors)
-            {
-                throw new InvalidRequestException(failure.ErrorMessage);
-            }
-        }
-        
         var user = await userManager.FindByEmailAsync(request.Email);
         
         if (user == null)
@@ -46,7 +34,7 @@ public class LoginCommandHandler(
             throw new InValidPasswordException($"{request.Email}");
         }
         
-        var accessToken = jwtTokenGeneratorService.GenerateJwtToken(user, "Customer");
+        var accessToken = jwtTokenGeneratorService.GenerateJwtToken(user, nameof(UserRole.Customer));
         
         var expiresIn = configuration.GetValue<int>("AuthSettings:ExpireTimeInSeconds");
         

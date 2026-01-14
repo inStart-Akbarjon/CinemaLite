@@ -1,6 +1,5 @@
 ﻿using CinemaLite.Application.CQRS.Auth.Register.Commands;
 using CinemaLite.Application.DTOs.Auth.Login.Respone;
-using CinemaLite.Application.DTOs.Auth.Registration.Respone;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Domain.Models;
 
@@ -23,13 +22,6 @@ public class AuthMapper : IAuthMapper
         {
             AccessToken = accessToken,
             ExpiresIn = expiresIn,
-        };
-    }
-    public RegisterApplicationUserResponse ToRegisterApplicationUserResponse(bool succeeded)
-    {
-        return new RegisterApplicationUserResponse()
-        {
-            Succeeded = succeeded
         };
     }
 }

@@ -1,6 +1,14 @@
-﻿namespace CinemaLite.Application.Exceptions.Auth;
+﻿using CinemaLite.Application.Exceptions.Abstract;
+using Microsoft.AspNetCore.Http;
 
-public class NotFoundUserException(string email) : Exception($"The user with this email '{email}' not found.")
+namespace CinemaLite.Application.Exceptions.Auth;
+
+public class NotFoundUserException: AppException
 {
-    
+    public NotFoundUserException(string email) : base(
+        message: $"The user with this email '{email}' not found.",
+        statusCode: StatusCodes.Status404NotFound, 
+        errorCode: "Not found user")
+    {
+    }
 }

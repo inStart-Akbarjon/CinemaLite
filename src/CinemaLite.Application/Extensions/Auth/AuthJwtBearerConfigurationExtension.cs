@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -8,12 +9,11 @@ namespace CinemaLite.Application.Extensions.Auth;
 
 public static class AuthJwtBearerConfigurationExtension
 {
-    public static IServiceCollection AddJwtBearerConfiguration(
-        this IServiceCollection services,
-        IConfiguration configuration
+    public static WebApplicationBuilder AddJwtBearerConfiguration(
+        this WebApplicationBuilder builder
     )
     {
-        services.AddAuthentication(options =>
+        builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -24,17 +24,17 @@ public static class AuthJwtBearerConfigurationExtension
                 oprions.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = configuration.GetValue<string>("AuthSettings:Issuer"),
+                    ValidIssuer = builder.Configuration.GetValue<string>("AuthSettings:Issuer"),
                     ValidateAudience = true,
-                    ValidAudience = configuration.GetValue<string>("AuthSettings:Audience"),
+                    ValidAudience = builder.Configuration.GetValue<string>("AuthSettings:Audience"),
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration.GetValue<string>("AuthSettings:SecretKey")!)
+                        Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("AuthSettings:SecretKey")!)
                     )
                 };
             });
 
-        return services;
+        return builder;
     }
 }

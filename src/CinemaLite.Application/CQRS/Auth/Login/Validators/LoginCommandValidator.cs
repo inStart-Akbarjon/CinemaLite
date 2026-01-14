@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CinemaLite.Application.CQRS.Auth.Login.Validators;
 
-public class LoginCustomerCommandValidator : AbstractValidator<LoginCommand>
+public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
-    public LoginCustomerCommandValidator()
+    public LoginCommandValidator()
     {
         RuleFor(c => c.Email)
             .Must(email => email.Contains("@"))

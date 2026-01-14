@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CinemaLite.Domain.Enums;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,14 +12,14 @@ public static class AddRoleToDbExtension
         using var scope = app.Services.CreateScope();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
         
-        if (!await roleManager.RoleExistsAsync("Admin"))
+        if (!await roleManager.RoleExistsAsync(nameof(UserRole.Admin)))
         {
-            await roleManager.CreateAsync(new IdentityRole<int>("Admin"));
+            await roleManager.CreateAsync(new IdentityRole<int>(nameof(UserRole.Admin)));
         }
 
-        if (!await roleManager.RoleExistsAsync("Customer"))
+        if (!await roleManager.RoleExistsAsync(nameof(UserRole.Customer)))
         {
-            await roleManager.CreateAsync(new IdentityRole<int>("Customer"));
+            await roleManager.CreateAsync(new IdentityRole<int>(nameof(UserRole.Customer)));
         }
         
         return app;
