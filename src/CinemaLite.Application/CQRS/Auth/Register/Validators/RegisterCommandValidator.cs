@@ -8,7 +8,7 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     public RegisterCommandValidator()
     {
         RuleFor(c => c.Email)
-            .Must(email => email.Contains('@'))
+            .EmailAddress()
             .WithMessage("Invalid email address.")
             .NotEmpty()
             .WithMessage("Email is required.");

@@ -8,7 +8,7 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
     public LoginCommandValidator()
     {
         RuleFor(c => c.Email)
-            .Must(email => email.Contains("@"))
+            .EmailAddress()
             .WithMessage("Invalid email address.")
             .NotEmpty()
             .WithMessage("Email is required.");
