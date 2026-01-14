@@ -1,5 +1,6 @@
 ﻿using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Domain.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,24 +11,24 @@ namespace CinemaLite.Infrastructure.Database.Extensions;
 
 public static class DatabaseConnectionExtension
 {
-    public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
+    public static WebApplicationBuilder RegisterDatabase(this WebApplicationBuilder builder)
     {
-        services.AddScoped<IAppDbContext, AppDbContext>();
+        builder.Services.AddScoped<IAppDbContext, AppDbContext>();
         
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(
-            configuration.GetConnectionString("DefaultConnection")
+            builder.Configuration.GetConnectionString("DefaultConnection")
         );
 
         dataSourceBuilder.EnableDynamicJson();
 
         var dataSource = dataSourceBuilder.Build();
 
-        services.AddDbContext<AppDbContext>(options =>
+        builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options.UseNpgsql(dataSource);
         });
         
-        services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
+        builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
             {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireDigit = false;
@@ -39,6 +40,6 @@ public static class DatabaseConnectionExtension
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
         
-        return services;
+        return builder;
     }
 }
