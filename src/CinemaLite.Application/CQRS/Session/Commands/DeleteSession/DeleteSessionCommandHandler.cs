@@ -14,8 +14,7 @@ public class DeleteSessionCommandHandler(IAppDbContext dbContext) : IRequestHand
         CancellationToken cancellationToken
     ) {
         var movie = await dbContext.Movies
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.MovieId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
 
         if (movie is null)
         {
@@ -23,8 +22,7 @@ public class DeleteSessionCommandHandler(IAppDbContext dbContext) : IRequestHand
         }
         
         var session = movie.Sessions
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefault(s => s.Id == request.Id);
+            .FirstOrDefault(s => s.Id == request.Id && s.DeletedAt == null);
 
         if (session is null)
         {

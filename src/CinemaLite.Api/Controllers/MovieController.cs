@@ -17,37 +17,28 @@ namespace CinemaLite.Api.Controllers;
 public class MovieController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetAllMovies(
-        [FromQuery] GetAllMoviesQuery request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetAllMovies([FromQuery] GetAllMoviesQuery request, CancellationToken cancellationToken) 
+    {
         return await mediator.Send(request, cancellationToken);
     }
     
     [HttpGet("{id}")]
-    public async Task<GetMovieByIdResponse> GetMovieById(
-        [FromRoute] GetMovieByIdQuery request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<GetMovieByIdResponse> GetMovieById([FromRoute] GetMovieByIdQuery request, CancellationToken cancellationToken) 
+    {
         return await mediator.Send(request, cancellationToken);
     }
     
     [Authorize]
     [HttpPost]
-    public async Task<CreateMovieResponse> CreateMovie(
-        [FromBody] CreateMovieCommand request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<CreateMovieResponse> CreateMovie([FromBody] CreateMovieCommand request, CancellationToken cancellationToken) 
+    {
         return await mediator.Send(request, cancellationToken);
     }
     
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<UpdateMovieResponse> UpdateMovie(
-        [FromRoute] Guid id, 
-        [FromBody] UpdateMovieRequest request,
-        CancellationToken cancellationToken
-    ) {
+    public async Task<UpdateMovieResponse> UpdateMovie([FromRoute] Guid id, [FromBody] UpdateMovieRequest request, CancellationToken cancellationToken) 
+    {
         var command = new UpdateMovieCommand(
             id,
             request.Title,
@@ -59,10 +50,8 @@ public class MovieController(IMediator mediator) : ControllerBase
     
     [Authorize]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteMovie(
-        [FromRoute] DeleteMovieCommand request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<IActionResult> DeleteMovie([FromRoute] DeleteMovieCommand request, CancellationToken cancellationToken) 
+    {
         return await mediator.Send(request, cancellationToken);
     }
 }

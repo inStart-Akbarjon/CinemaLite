@@ -16,20 +16,15 @@ namespace CinemaLite.Api.Controllers;
 public class SessionController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<List<GetAllSessionsFromMovieResponse>> GetMovieSessions(
-        [FromQuery] GetAllSessionsQuery request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<GetAllSessionsFromMovieResponse> GetMovieSessions([FromQuery] GetAllSessionsQuery request, CancellationToken cancellationToken) 
+    {
         return await mediator.Send(request, cancellationToken);
     }
     
     [HttpGet]
     [Route("{id}")]
-    public async Task<GetSessionByIdResponse> GetSessionById(
-        [FromRoute] Guid id, 
-        [FromBody] GetSessionByIdRequest request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<GetSessionByIdResponse> GetSessionById([FromRoute] Guid id, [FromBody] GetSessionByIdRequest request, CancellationToken cancellationToken) 
+    {
         var query = new GetSessionByIdQuery(id, request.MovieId);
         
         return await mediator.Send(query, cancellationToken);
@@ -37,24 +32,19 @@ public class SessionController(IMediator mediator) : ControllerBase
     
     [HttpPost]
     [Authorize]
-    public async Task<CreateSessionResponse> CreateSession(
-        [FromBody] CreateSessionCommand request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<CreateSessionResponse> CreateSession([FromBody] CreateSessionCommand request, CancellationToken cancellationToken) 
+    {
         return await mediator.Send(request, cancellationToken);
     }
     
     [HttpPut("{id}")]
     [Authorize]
-    public async Task<UpdateSessionResponse> UpdateSession(
-        [FromRoute] Guid id,
-        [FromBody] UpdateSessionRequest request,
-        CancellationToken cancellationToken
-    ) {
+    public async Task<UpdateSessionResponse> UpdateSession([FromRoute] Guid id, [FromBody] UpdateSessionRequest request, CancellationToken cancellationToken) 
+    {
         var command = new UpdateSessionCommand(
-            id, 
-            request.MovieId, 
-            request.CinemaName, 
+            id,
+            request.MovieId,
+            request.CinemaName,
             request.Price, 
             request.AvailableSeats, 
             request.StartTime
@@ -65,13 +55,9 @@ public class SessionController(IMediator mediator) : ControllerBase
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<IActionResult> DeleteSession(
-        [FromRoute] Guid id, 
-        [FromBody] DeleteSessionRequest request,
-        CancellationToken cancellationToken
-    ) {
-        var command = new DeleteSessionCommand(id, request.MovieId);
-        
+    public async Task<IActionResult> DeleteSession([FromRoute] Guid id, [FromBody] Guid movieId, CancellationToken cancellationToken) 
+    {
+        var command = new DeleteSessionCommand(id, movieId);
         return await mediator.Send(command, cancellationToken);
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CinemaLite.Application.CQRS.Session.Queries.GetAllSessions;
 
-public record GetAllSessionsQuery(Guid MovieId) : IRequest<List<GetAllSessionsFromMovieResponse>>
+public record GetAllSessionsQuery(Guid MovieId) : IRequest<GetAllSessionsFromMovieResponse>
 {
         
 };

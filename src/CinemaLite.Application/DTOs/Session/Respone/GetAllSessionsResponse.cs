@@ -15,7 +15,7 @@ public class GetAllSessionsFromMovieResponse
 
 public class GetAllSessionsResponse
 {
-    public Guid SessionId { get; set; }
+    public Guid Id { get; set; }
     public DateTime StartTime { get; set; }
     public string CinemaName { get; set; }
     public int AvailableSeats { get; set; }

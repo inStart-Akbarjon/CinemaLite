@@ -11,8 +11,7 @@ public class DeleteMovieCommandHandler(IAppDbContext dbContext) : IRequestHandle
     public async Task<IActionResult> Handle(DeleteMovieCommand request, CancellationToken cancellationToken)
     {
         var movie = await dbContext.Movies
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedAt == null, cancellationToken);
 
         if (movie is null)
         {

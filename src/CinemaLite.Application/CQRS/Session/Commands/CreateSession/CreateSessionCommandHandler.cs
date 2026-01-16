@@ -13,8 +13,7 @@ public class CreateSessionCommandHandler(IAppDbContext dbContext, ISessionMapper
     public async Task<CreateSessionResponse> Handle(CreateSessionCommand request, CancellationToken cancellationToken)
     {
         var movie = await dbContext.Movies
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.MovieId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
         
         if (movie == null)
         {
@@ -30,7 +29,6 @@ public class CreateSessionCommandHandler(IAppDbContext dbContext, ISessionMapper
 
         var session = new Domain.Models.Session()
         {
-            Id = Guid.NewGuid(),
             StartTime = request.StartTime,
             CinemaName = request.CinemaName,
             Price = request.Price,

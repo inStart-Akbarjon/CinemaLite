@@ -17,15 +17,14 @@ public class CreateTicketCommandHandler(
     ICurrentUserService currentUserService) : IRequestHandler<CreateTicketCommand, CreateTicketResponse>
 {
     public async Task<CreateTicketResponse> Handle(
-        CreateTicketCommand request, 
+        CreateTicketCommand request,
         CancellationToken cancellationToken
     )
     {
         var userId = currentUserService.UserId;
         
         var movie = await dbContext.Movies
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.MovieId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
 
         if (movie is null)
         {
@@ -33,8 +32,7 @@ public class CreateTicketCommandHandler(
         }
         
         var session = movie.Sessions
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefault(s => s.Id == request.SessionId);
+            .FirstOrDefault(s => s.Id == request.SessionId && s.DeletedAt == null);
 
         if (session is null)
         {

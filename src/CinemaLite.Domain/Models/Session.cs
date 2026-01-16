@@ -2,6 +2,7 @@
 
 public class Session : BaseEntity
 {
+    public override Guid Id { get; set; } = Guid.NewGuid();
     public required Guid MovieId { get; set; }
     public required string CinemaName { get; set; }
     public required decimal Price { get; set; }

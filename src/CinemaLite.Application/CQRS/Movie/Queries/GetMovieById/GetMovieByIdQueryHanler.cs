@@ -13,8 +13,7 @@ public class GetMovieByIdQueryHanler(IAppDbContext dbContext, IMovieMapper movie
     {
         var movie = await dbContext.Movies
             .AsNoTracking()
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedAt == null, cancellationToken);
 
         if (movie is null)
         {

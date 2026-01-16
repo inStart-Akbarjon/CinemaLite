@@ -16,8 +16,7 @@ public class GetSessionByIdQueryHandler(IAppDbContext dbContext, ISessionMapper 
     ) {
         var movie = await dbContext.Movies
             .AsNoTracking()
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.MovieId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
 
         if (movie == null)
         {
@@ -25,8 +24,7 @@ public class GetSessionByIdQueryHandler(IAppDbContext dbContext, ISessionMapper 
         }
         
         var session = movie.Sessions
-            .Where(s => s.DeletedAt == null)
-            .FirstOrDefault(s => s.Id == request.Id);
+            .FirstOrDefault(s => s.Id == request.Id && s.DeletedAt == null);
 
         if (session == null)
         {

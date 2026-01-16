@@ -13,10 +13,9 @@ public class CreateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper mov
     {
         var duplicateMovie = await dbContext.Movies
             .AsNoTracking()
-            .Where(m => m.Title == request.Title)
-            .ToListAsync(cancellationToken);
+            .FirstOrDefaultAsync(m => m.Title == request.Title && m.DeletedAt == null, cancellationToken);
 
-        if (duplicateMovie.Count != 0)
+        if (duplicateMovie != null)
         {
             throw new DuplicateMovieException(request.Title);
         }

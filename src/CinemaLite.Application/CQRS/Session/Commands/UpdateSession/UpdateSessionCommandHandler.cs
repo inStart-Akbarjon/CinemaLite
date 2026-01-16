@@ -18,8 +18,7 @@ public class UpdateSessionCommandHandler(
         CancellationToken cancellationToken
     ) {
         var movie = await dbContext.Movies
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefaultAsync(m => m.Id == request.MovieId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
 
         if (movie is null)
         {
@@ -27,8 +26,7 @@ public class UpdateSessionCommandHandler(
         }
         
         var session = movie.Sessions
-            .Where(m => m.DeletedAt == null)
-            .FirstOrDefault(s => s.Id == request.Id);
+            .FirstOrDefault(s => s.Id == request.Id && s.DeletedAt == null);
 
         if (session is null)
         {
@@ -41,7 +39,8 @@ public class UpdateSessionCommandHandler(
         session.StartTime = request.StartTime;
         
         dbContext.Movies.Update(movie);
-        await  dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        
         return sessionMapper.ToUpdateSessionResponse(session);
     }
 }
