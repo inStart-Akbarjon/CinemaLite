@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src/CinemaLite.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src/CinemaLite.Infrastructure", "src/CinemaLite.Infrastructure\CinemaLite.Infrastructure.csproj", "{1BBE1A14-58E1-437B-95FF-6B07A1A66706}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test/CinemaLite.IntegrationTest", "test/CinemaLite.IntegrationTest\CinemaLite.IntegrationTest.csproj", "{79BD14A4-5BBD-478C-8C4B-00B626BE755A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{1BBE1A14-58E1-437B-95FF-6B07A1A66706}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BBE1A14-58E1-437B-95FF-6B07A1A66706}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BBE1A14-58E1-437B-95FF-6B07A1A66706}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79BD14A4-5BBD-478C-8C4B-00B626BE755A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79BD14A4-5BBD-478C-8C4B-00B626BE755A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79BD14A4-5BBD-478C-8C4B-00B626BE755A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79BD14A4-5BBD-478C-8C4B-00B626BE755A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -186,7 +186,7 @@ namespace CinemaLite.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     MovieId = table.Column<Guid>(type: "uuid", nullable: false),
                     SessionId = table.Column<Guid>(type: "uuid", nullable: false),
                     MovieTitle = table.Column<string>(type: "text", nullable: false),

@@ -7,4 +7,9 @@ public class Session : BaseEntity
     public required decimal Price { get; set; }
     public required int AvailableSeats { get; set; }
     public required DateTime StartTime { get; set; }
+    
+    public void ReduceAvailableSeatsByOne(int currentSeats)
+    {
+        AvailableSeats = currentSeats - 1;
+    }
 }

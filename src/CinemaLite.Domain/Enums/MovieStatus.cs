@@ -2,6 +2,6 @@
 
 public enum MovieStatus
 {
-    Published = 0,
-    UnPublished = 1,
+    UnPublished = 0,
+    Published = 1,
 }

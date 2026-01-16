@@ -14,6 +14,12 @@ public static class DependencyInjectionRegistrationExtension
         builder.Services.AddScoped<IAuthMapper, AuthMapper>();
         builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
         builder.Services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
+        builder.Services.AddScoped<IMovieMapper, MovieMapper>();
+        builder.Services.AddScoped<ISessionMapper, SessionMapper>();
+        builder.Services.AddScoped<ITicketMapper, TicketMapper>();
+            
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
         
         return builder;
     }
