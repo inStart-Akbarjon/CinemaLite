@@ -13,7 +13,6 @@
     <ItemGroup>
       <Folder Include="CQRS\Auth\" />
       <Folder Include="DTOs\Auth\" />
-      <Folder Include="Extensions\" />
       <Folder Include="Services\Implementations\" />
     </ItemGroup>
 

@@ -2,7 +2,7 @@
 
 public class Ticket : BaseEntity
 {
-    public required Guid UserId { get; set; }
+    public required int UserId { get; set; }
     public required Guid MovieId { get; set; }
     public required Guid SessionId { get; set; }
     public required string MovieTitle { get; set; }
