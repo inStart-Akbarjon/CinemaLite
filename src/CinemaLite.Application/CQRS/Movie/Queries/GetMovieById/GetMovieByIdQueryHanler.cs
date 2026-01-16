@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Movie.Queries.GetMovieById;
 
-public class GetMovieByIdQueryHanler(IAppDbContext dbContext, IMovieMapper movieMapper) : IRequestHandler<GetMovieByIdQuery, GetMovieByIdResponse>
+public class GetMovieByIdQueryHandler(IAppDbContext dbContext, IMovieMapper movieMapper) : IRequestHandler<GetMovieByIdQuery, GetMovieByIdResponse>
 {
     public async Task<GetMovieByIdResponse> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
     {
@@ -19,7 +19,7 @@ public class GetMovieByIdQueryHanler(IAppDbContext dbContext, IMovieMapper movie
         {
             throw new NotFoundMovieException(request.Id);
         }
-
+        
         return movieMapper.ToGetMovieByIdResponse(movie);
     }
 }

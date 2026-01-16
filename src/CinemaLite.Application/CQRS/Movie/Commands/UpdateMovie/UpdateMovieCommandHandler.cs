@@ -22,7 +22,7 @@ public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper mov
         movie.Title = request.Title;
         movie.DurationMinutes = request.DurationMinutes;
         movie.Genre = request.Genre;
-
+        
         dbContext.Movies.Update(movie);
         await dbContext.SaveChangesAsync(cancellationToken);
         
