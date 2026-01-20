@@ -21,7 +21,7 @@ public class MovieTests(IntegrationTestWebAppFactory factory) : BaseTest(factory
         
         // Act
         Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        var response = await Client.PostAsJsonAsync("/api/movie", createCommand);
+        var response = await Client.PostAsJsonAsync("/api/movies", createCommand);
         
         // Assert
         response.EnsureSuccessStatusCode();
