@@ -13,7 +13,7 @@ using MediatR;
 namespace CinemaLite.Api.Controllers;
 
 [ApiController]
-[Route("api/movie")]
+[Route("api/movies")]
 public class MovieController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
@@ -23,9 +23,10 @@ public class MovieController(IMediator mediator) : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<GetMovieByIdResponse> GetMovieById([FromRoute] GetMovieByIdQuery request, CancellationToken cancellationToken) 
+    public async Task<GetMovieByIdResponse> GetMovieById([FromRoute] Guid id, CancellationToken cancellationToken) 
     {
-        return await mediator.Send(request, cancellationToken);
+        var query = new GetMovieByIdQuery(id);
+        return await mediator.Send(query, cancellationToken);
     }
     
     [Authorize]
@@ -50,8 +51,9 @@ public class MovieController(IMediator mediator) : ControllerBase
     
     [Authorize]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteMovie([FromRoute] DeleteMovieCommand request, CancellationToken cancellationToken) 
+    public async Task<IActionResult> DeleteMovie([FromRoute] Guid id, CancellationToken cancellationToken) 
     {
-        return await mediator.Send(request, cancellationToken);
+        var command = new DeleteMovieCommand(id);
+        return await mediator.Send(command, cancellationToken);
     }
 }

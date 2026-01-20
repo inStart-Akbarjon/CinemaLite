@@ -8,10 +8,6 @@ public class UpdateSessionCommandValidator : AbstractValidator<UpdateSessionRequ
 {
     public UpdateSessionCommandValidator()
     {
-        RuleFor(s => s.MovieId)
-            .NotEmpty()
-            .WithMessage("Movie id cannot be empty");
-        
         RuleFor(s => s.CinemaName)
             .NotEmpty()
             .WithMessage("Property CinemaName cannot be empty");

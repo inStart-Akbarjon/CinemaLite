@@ -1,9 +1,9 @@
 ﻿using CinemaLite.Application.CQRS.Ticket.Command.CreateTicket;
 using CinemaLite.Application.CQRS.Ticket.Queries.GetUserTickets;
 using CinemaLite.Application.DTOs.Ticket.Response;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
 
 namespace CinemaLite.Api.Controllers;
 
@@ -11,19 +11,19 @@ namespace CinemaLite.Api.Controllers;
 [Route("api/ticket")]
 public class TicketController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("my")]
     [Authorize]
+    [HttpGet("my")]
     public async Task<GetUserTicketsResponse> GetUserTickets(CancellationToken cancellationToken) 
     {
         var query = new GetUserTicketsQuery();
         return await mediator.Send(query, cancellationToken);
     }
 
-    [HttpPost]
     [Authorize]
-    public async Task<CreateTicketResponse> CreateTicket([FromBody] CreateTicketCommand request, CancellationToken cancellationToken) 
+    [HttpPost("{movieId}/sessions/{sessionId}")]
+    public async Task<CreateTicketResponse> CreateTicket([FromRoute] Guid movieId, [FromRoute] Guid sessionId, CancellationToken cancellationToken) 
     {
-        var command = new CreateTicketCommand(request.MovieId, request.SessionId);
+        var command = new CreateTicketCommand(movieId, sessionId);
         return await mediator.Send(command, cancellationToken);
     }
 }
