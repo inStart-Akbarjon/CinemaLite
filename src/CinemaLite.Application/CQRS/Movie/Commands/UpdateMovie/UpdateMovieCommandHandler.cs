@@ -11,6 +11,15 @@ public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper mov
 {
     public async Task<UpdateMovieResponse> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
     {
+        var duplicateMovie = await dbContext.Movies
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.Title == request.Title && m.DeletedAt == null, cancellationToken);
+    
+        if (duplicateMovie != null)
+        {
+            throw new DuplicateMovieException(request.Title);
+        }
+        
         var movie = await dbContext.Movies
             .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedAt == null, cancellationToken);
 

@@ -12,38 +12,38 @@ using MediatR;
 namespace CinemaLite.Api.Controllers;
 
 [ApiController]
-[Route("api/session")]
+[Route("api/movies")]
 public class SessionController(IMediator mediator) : ControllerBase
 {
-    [HttpGet]
-    public async Task<GetAllSessionsFromMovieResponse> GetMovieSessions([FromQuery] GetAllSessionsQuery request, CancellationToken cancellationToken) 
+    [HttpGet("{movieId}/sessions")]
+    public async Task<GetAllSessionsFromMovieResponse> GetMovieSessions([FromRoute] Guid movieId, CancellationToken cancellationToken) 
     {
-        return await mediator.Send(request, cancellationToken);
-    }
-    
-    [HttpGet]
-    [Route("{id}")]
-    public async Task<GetSessionByIdResponse> GetSessionById([FromRoute] Guid id, [FromBody] GetSessionByIdRequest request, CancellationToken cancellationToken) 
-    {
-        var query = new GetSessionByIdQuery(id, request.MovieId);
-        
+        var query = new GetAllSessionsQuery(movieId);
         return await mediator.Send(query, cancellationToken);
     }
     
-    [HttpPost]
-    [Authorize]
-    public async Task<CreateSessionResponse> CreateSession([FromBody] CreateSessionCommand request, CancellationToken cancellationToken) 
+    [HttpGet("{movieId}/sessions/{id}")]
+    public async Task<GetSessionByIdResponse> GetSessionById([FromRoute] Guid movieId, [FromRoute] Guid id, CancellationToken cancellationToken) 
     {
-        return await mediator.Send(request, cancellationToken);
+        var query = new GetSessionByIdQuery(id, movieId);
+        return await mediator.Send(query, cancellationToken);
     }
     
-    [HttpPut("{id}")]
     [Authorize]
-    public async Task<UpdateSessionResponse> UpdateSession([FromRoute] Guid id, [FromBody] UpdateSessionRequest request, CancellationToken cancellationToken) 
+    [HttpPost("{movieId}/sessions")]
+    public async Task<CreateSessionResponse> CreateSession([FromRoute] Guid movieId, [FromBody] CreateSessionRequest request, CancellationToken cancellationToken) 
+    {
+        var command = new CreateSessionCommand(movieId, request.CinemaName, request.AvailableSeats, request.Price, request.StartTime);
+        return await mediator.Send(command, cancellationToken);
+    }
+    
+    [Authorize]
+    [HttpPut("{movieId}/sessions/{id}")]
+    public async Task<UpdateSessionResponse> UpdateSession([FromRoute] Guid movieId, [FromRoute] Guid id, [FromBody] UpdateSessionRequest request, CancellationToken cancellationToken) 
     {
         var command = new UpdateSessionCommand(
             id,
-            request.MovieId,
+            movieId,
             request.CinemaName,
             request.Price, 
             request.AvailableSeats, 
@@ -52,10 +52,10 @@ public class SessionController(IMediator mediator) : ControllerBase
         
         return await mediator.Send(command, cancellationToken);
     }
-
-    [HttpDelete("{id}")]
+    
     [Authorize]
-    public async Task<IActionResult> DeleteSession([FromRoute] Guid id, [FromBody] Guid movieId, CancellationToken cancellationToken) 
+    [HttpDelete("{movieId}/sessions/{id}")]
+    public async Task<IActionResult> DeleteSession([FromRoute] Guid movieId, [FromRoute] Guid id, CancellationToken cancellationToken) 
     {
         var command = new DeleteSessionCommand(id, movieId);
         return await mediator.Send(command, cancellationToken);

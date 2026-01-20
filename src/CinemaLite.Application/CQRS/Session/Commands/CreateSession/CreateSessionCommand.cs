@@ -4,11 +4,11 @@ using MediatR;
 namespace CinemaLite.Application.CQRS.Session.Commands.CreateSession;
 
 public record CreateSessionCommand(
-    DateTime StartTime,
+    Guid MovieId,
     string CinemaName,
     int AvailableSeats,
     decimal Price,
-    Guid MovieId
+    DateTime StartTime
 ) : IRequest<CreateSessionResponse>
 {
 }
