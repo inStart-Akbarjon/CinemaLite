@@ -1,0 +1,16 @@
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\bin\Debug\net10.0\CinemaLite.Application.deps.json
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\bin\Debug\net10.0\CinemaLite.Application.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\bin\Debug\net10.0\CinemaLite.Application.pdb
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\bin\Debug\net10.0\CinemaLite.Domain.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\bin\Debug\net10.0\CinemaLite.Domain.pdb
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.csproj.AssemblyReference.cache
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.AssemblyInfoInputs.cache
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.AssemblyInfo.cs
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.csproj.CoreCompileInputs.cache
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.sourcelink.json
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLi.15707343.Up2Date
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\refint\CinemaLite.Application.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\CinemaLite.Application.pdb
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Application\obj\Debug\net10.0\ref\CinemaLite.Application.dll

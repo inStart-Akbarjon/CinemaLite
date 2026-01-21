@@ -1,0 +1,13 @@
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\bin\Debug\net10.0\CinemaLite.Domain.deps.json
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\bin\Debug\net10.0\CinemaLite.Domain.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\bin\Debug\net10.0\CinemaLite.Domain.pdb
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.csproj.AssemblyReference.cache
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.AssemblyInfoInputs.cache
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.AssemblyInfo.cs
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.sourcelink.json
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\refint\CinemaLite.Domain.dll
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\CinemaLite.Domain.pdb
+C:\Users\Akbarjon\Desktop\CinemaLite\src\CinemaLite.Domain\obj\Debug\net10.0\ref\CinemaLite.Domain.dll
