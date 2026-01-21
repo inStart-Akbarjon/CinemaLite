@@ -2,6 +2,7 @@
 using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
+using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ public class GetMovieByIdQueryHandler(IAppDbContext dbContext, IMovieMapper movi
     {
         var movie = await dbContext.Movies
             .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedAt == null, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedAt == null && m.Status == MovieStatus.Published, cancellationToken);
 
         if (movie is null)
         {

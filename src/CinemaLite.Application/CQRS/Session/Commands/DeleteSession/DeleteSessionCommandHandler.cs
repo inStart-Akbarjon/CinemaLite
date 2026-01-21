@@ -1,6 +1,7 @@
 ﻿using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Exceptions.Session;
 using CinemaLite.Application.Interfaces.DbContext;
+using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ public class DeleteSessionCommandHandler(IAppDbContext dbContext) : IRequestHand
         CancellationToken cancellationToken
     ) {
         var movie = await dbContext.Movies
-            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null && m.Status == MovieStatus.Published, cancellationToken);
 
         if (movie is null)
         {
