@@ -4,6 +4,6 @@ using MediatR;
 
 namespace CinemaLite.Application.CQRS.Movie.Queries.GetAllMovies;
 
-public record GetAllMoviesQuery(int pageNumber, int pageSize) : IRequest<PaginatedMovieList<GetAllMoviesResponse>>
+public record GetAllMoviesQuery(int PageNumber = 1, int PageSize = 10) : IRequest<PaginatedMovieList<GetAllMoviesResponse>>
 {
 }

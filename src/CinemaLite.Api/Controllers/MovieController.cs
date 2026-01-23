@@ -3,6 +3,8 @@ using CinemaLite.Application.CQRS.Movie.Commands.DeleteMovie;
 using CinemaLite.Application.CQRS.Movie.Commands.UpdateMovie;
 using CinemaLite.Application.CQRS.Movie.Queries.GetAllMovies;
 using CinemaLite.Application.CQRS.Movie.Queries.GetMovieById;
+using CinemaLite.Application.CQRS.Movie.Queries.GetUnpublishedMovies;
+using CinemaLite.Application.CQRS.Movie.Queries.SearchMovies;
 using CinemaLite.Application.DTOs.Movie.Request;
 using CinemaLite.Application.DTOs.Movie.Response;
 using CinemaLite.Application.DTOs.Pagination;
@@ -20,6 +22,23 @@ public class MovieController(IMediator mediator) : ControllerBase
     public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetAllMovies([FromQuery] GetAllMoviesQuery request, CancellationToken cancellationToken) 
     {
         return await mediator.Send(request, cancellationToken);
+    }
+    
+    [HttpGet("unpublished")]
+    public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetUnpublishedMovies([FromQuery] GetUnpublishedMoviesQuery request, CancellationToken cancellationToken) 
+    {
+        return await mediator.Send(request, cancellationToken);
+    }
+    
+    [HttpGet("search")]
+    public async Task<PaginatedMovieList<GetAllMoviesResponse>> SearchMovies([FromQuery] SearchRequest request, CancellationToken cancellationToken) 
+    {
+        var query = new SearchMoviesQuery(
+            request.SearchTerm,
+            request.PageNumber,
+            request.PageSize);
+        
+        return await mediator.Send(query, cancellationToken);
     }
     
     [HttpGet("{id}")]

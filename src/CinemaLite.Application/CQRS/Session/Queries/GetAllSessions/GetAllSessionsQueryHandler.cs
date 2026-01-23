@@ -1,6 +1,7 @@
 ﻿using CinemaLite.Application.DTOs.Session.Respone;
 using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Interfaces.DbContext;
+using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ public class GetAllSessionsQueryHandler(IAppDbContext dbContext) : IRequestHandl
     ) {
         var movie = await dbContext.Movies
             .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.DeletedAt == null && m.Id == request.MovieId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.DeletedAt == null && m.Id == request.MovieId && m.Status == MovieStatus.Published, cancellationToken);
 
         if (movie == null)
         {

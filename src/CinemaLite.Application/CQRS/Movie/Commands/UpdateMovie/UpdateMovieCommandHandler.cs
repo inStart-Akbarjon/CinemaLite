@@ -2,6 +2,7 @@
 using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
+using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper mov
     {
         var duplicateMovie = await dbContext.Movies
             .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.Title == request.Title && m.DeletedAt == null, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Title == request.Title && m.DeletedAt == null && m.Status == MovieStatus.Published, cancellationToken);
     
         if (duplicateMovie != null)
         {
