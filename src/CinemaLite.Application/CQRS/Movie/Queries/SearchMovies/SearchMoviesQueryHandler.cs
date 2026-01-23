@@ -13,7 +13,7 @@ public class SearchMoviesQueryHandler(IAppDbContext dbContext) : IRequestHandler
 {
     public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(SearchMoviesQuery request, CancellationToken cancellationToken)
     {
-        var lowerCaseTerm = request.SearchTerm.ToLower();
+        var lowerCaseTerm = request.SearchTerm.ToLower().Trim();
         
         var movies = await dbContext.Movies
             .AsNoTracking()
