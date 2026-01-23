@@ -13,7 +13,6 @@
     <ItemGroup>
       <Folder Include="CQRS\Auth\" />
       <Folder Include="DTOs\Auth\" />
-      <Folder Include="Services\Implementations\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,6 +21,8 @@
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
       <PackageReference Include="MediatR" Version="14.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.1" />
+      <PackageReference Include="RedLock.net" Version="2.3.2" />
+      <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
     </ItemGroup>
 

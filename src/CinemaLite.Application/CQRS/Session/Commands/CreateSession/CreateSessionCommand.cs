@@ -6,8 +6,9 @@ namespace CinemaLite.Application.CQRS.Session.Commands.CreateSession;
 public record CreateSessionCommand(
     Guid MovieId,
     string CinemaName,
-    int AvailableSeats,
     decimal Price,
+    int TotalRows,
+    int SeatsPerRow,
     DateTime StartTime
 ) : IRequest<CreateSessionResponse>
 {

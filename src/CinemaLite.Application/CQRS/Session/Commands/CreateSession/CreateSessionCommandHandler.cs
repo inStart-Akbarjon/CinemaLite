@@ -1,8 +1,10 @@
 ﻿using CinemaLite.Application.DTOs.Session.Respone;
 using CinemaLite.Application.Exceptions.Movie;
+    using CinemaLite.Application.Extensions.SessionSeats;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Domain.Enums;
+using CinemaLite.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,16 +28,22 @@ public class CreateSessionCommandHandler(IAppDbContext dbContext, ISessionMapper
         {
             movie.MinPrice = request.Price;
         }
-
+        
+        var seats = new List<Seat>();
+        
+        seats.GenerateSeats(request.TotalRows, request.SeatsPerRow);
+        
         var session = new Domain.Models.Session()
         {
             StartTime = request.StartTime,
             CinemaName = request.CinemaName,
             Price = request.Price,
-            AvailableSeats = request.AvailableSeats,
-            MovieId = movie.Id
+            AvailableSeats = request.SeatsPerRow * request.TotalRows,
+            TotalRows = request.TotalRows,
+            SeatsPerRow = request.SeatsPerRow,
+            Seats = seats,
         };
-
+        
         sessions.Add(session);
         
         movie.Sessions = sessions;

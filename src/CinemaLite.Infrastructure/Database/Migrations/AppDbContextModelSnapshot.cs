@@ -161,6 +161,12 @@ namespace CinemaLite.Infrastructure.Migrations
                     b.Property<decimal>("PricePaid")
                         .HasColumnType("numeric");
 
+                    b.Property<int>("SeatNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SeatRow")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("SessionId")
                         .HasColumnType("uuid");
 

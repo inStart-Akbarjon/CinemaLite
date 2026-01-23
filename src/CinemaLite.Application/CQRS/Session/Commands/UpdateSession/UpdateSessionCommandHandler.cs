@@ -1,9 +1,11 @@
 ﻿using CinemaLite.Application.DTOs.Session.Respone;
 using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Exceptions.Session;
+using CinemaLite.Application.Extensions.SessionSeats;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Domain.Enums;
+using CinemaLite.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,11 +35,18 @@ public class UpdateSessionCommandHandler(
         {
             throw new NotFoundSessionException(request.Id);
         }
-
+        
+        var seats = new List<Seat>();
+        
+        seats.GenerateSeats(request.TotalRows, request.SeatsPerRow);
+        
+        session.StartTime = request.StartTime;
         session.CinemaName = request.CinemaName;
         session.Price = request.Price;
-        session.AvailableSeats = request.AvailableSeats;
-        session.StartTime = request.StartTime;
+        session.AvailableSeats = request.SeatsPerRow * request.TotalRows;
+        session.TotalRows = request.TotalRows;
+        session.SeatsPerRow = request.SeatsPerRow;
+        session.Seats = seats;
         
         dbContext.Movies.Update(movie);
         await dbContext.SaveChangesAsync(cancellationToken);

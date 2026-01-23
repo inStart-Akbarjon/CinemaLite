@@ -7,7 +7,7 @@ namespace CinemaLite.Application.Mappers;
 
 public class TicketMapper : ITicketMapper
 {
-    public Ticket ToTicketEntity(CreateTicketCommand request, Movie movie, Session session, int userId)
+    public Ticket ToTicketEntity(CreateTicketCommand request, Movie movie, Session session, Seat seat, int userId)
     {
         return new Ticket()
         {
@@ -16,6 +16,8 @@ public class TicketMapper : ITicketMapper
             SessionId = request.SessionId,
             MovieTitle = movie.Title,
             CinemaName = session.CinemaName,
+            SeatRow = seat.SeatRow,
+            SeatNumber = seat.SeatNumber,
             StartTime = session.StartTime,
             PricePaid = session.Price,
         };
@@ -28,6 +30,8 @@ public class TicketMapper : ITicketMapper
             TicketId = request.Id,
             MovieTitle = request.MovieTitle,
             CinemaName = request.CinemaName,
+            SeatRow = request.SeatRow,
+            SeatNumber = request.SeatNumber,
             StartTime = request.StartTime,
             PricePaid = request.PricePaid
         };
@@ -42,6 +46,8 @@ public class TicketMapper : ITicketMapper
                 TicketId = t.Id,
                 MovieTitle = t.MovieTitle,
                 CinemaName = t.CinemaName,
+                SeatRow = t.SeatRow,
+                SeatNumber = t.SeatNumber,
                 PricePaid = t.PricePaid,
                 StartTime = t.StartTime
             }).ToList()
