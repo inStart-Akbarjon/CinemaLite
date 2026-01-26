@@ -20,6 +20,7 @@ public class GetUserTicketsQueryHandler(
     ) {
         var tickets = await dbContext.Tickets
             .Where(t => t.DeletedAt == null && t.UserId == currentUserService.UserId)
+            .OrderByDescending(t => t.CreatedAt)
             .ToListAsync(cancellationToken);
 
         if (tickets == null)

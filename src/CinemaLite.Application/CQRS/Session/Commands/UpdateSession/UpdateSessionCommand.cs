@@ -8,7 +8,8 @@ public record UpdateSessionCommand(
     Guid MovieId, 
     string CinemaName, 
     decimal Price, 
-    int AvailableSeats, 
+    int TotalRows,
+    int SeatsPerRow,
     DateTime StartTime
 ) : IRequest<UpdateSessionResponse>
 {

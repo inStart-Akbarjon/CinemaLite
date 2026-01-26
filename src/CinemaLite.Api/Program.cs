@@ -12,6 +12,7 @@ builder.RegisterDatabase();
 builder.AddDependencyInjectionRegistrationService();
 builder.AddJwtBearerConfiguration();
 builder.AddMediatorRegistrationService();
+builder.AddRedisLock();
 builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();

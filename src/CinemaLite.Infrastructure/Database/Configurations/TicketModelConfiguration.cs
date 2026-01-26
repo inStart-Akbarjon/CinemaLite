@@ -18,6 +18,8 @@ public class TicketModelConfiguration : IEntityTypeConfiguration<Ticket>
         builder.Property(t => t.SessionId).IsRequired();
         builder.Property(t => t.MovieTitle).IsRequired();
         builder.Property(t => t.CinemaName).IsRequired();
+        builder.Property(t => t.SeatRow).IsRequired();
+        builder.Property(t => t.SeatNumber).IsRequired();
         builder.Property(t => t.StartTime).IsRequired();
         builder.Property(t => t.PricePaid).IsRequired();
     }

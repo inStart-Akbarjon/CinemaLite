@@ -5,7 +5,9 @@ namespace CinemaLite.Application.CQRS.Ticket.Command.CreateTicket;
 
 public record CreateTicketCommand(
     Guid MovieId,
-    Guid SessionId
+    Guid SessionId,
+    int SeatRow,
+    int SeatNumber
 ) : IRequest<CreateTicketResponse>
 {
 }

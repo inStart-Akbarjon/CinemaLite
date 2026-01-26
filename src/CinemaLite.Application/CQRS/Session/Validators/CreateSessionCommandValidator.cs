@@ -21,11 +21,17 @@ public class CreateSessionCommandValidator : AbstractValidator<CreateSessionComm
             .GreaterThan(0)
             .WithMessage("Price must be greater than 0");
         
-        RuleFor(s => s.AvailableSeats)
+        RuleFor(s => s.SeatsPerRow)
             .NotEmpty()
-            .WithMessage("AvailableSeats cannot be empty")
+            .WithMessage("SeatsPerRow cannot be empty")
             .GreaterThan(0)
-            .WithMessage("AvailableSeats must be greater than 0");
+            .WithMessage("SeatsPerRow must be greater than 0");
+        
+        RuleFor(s => s.TotalRows)
+            .NotEmpty()
+            .WithMessage("TotalRows cannot be empty")
+            .GreaterThan(0)
+            .WithMessage("TotalRows must be greater than 0");
 
         RuleFor(s => s.StartTime)
             .NotEmpty()

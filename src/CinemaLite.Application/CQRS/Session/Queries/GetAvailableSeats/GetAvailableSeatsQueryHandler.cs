@@ -5,14 +5,12 @@ using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaLite.Application.CQRS.Session.Queries.GetAllSessions;
+namespace CinemaLite.Application.CQRS.Session.Queries.GetAvailableSeats;
 
-public class GetAllSessionsQueryHandler(IAppDbContext dbContext) : IRequestHandler<GetAllSessionsQuery, GetAllSessionsFromMovieResponse>
+public class GetAvailableSeatsQueryHandler(IAppDbContext dbContext) : IRequestHandler<GetAvailableSeatsQuery, GetAvailableSeatsResponse>
 {
-    public async Task<GetAllSessionsFromMovieResponse> Handle(
-        GetAllSessionsQuery request, 
-        CancellationToken cancellationToken
-    ) {
+    public async Task<GetAvailableSeatsResponse> Handle(GetAvailableSeatsQuery request, CancellationToken cancellationToken)
+    {
         var movie = await dbContext.Movies
             .AsNoTracking()
             .FirstOrDefaultAsync(m => m.DeletedAt == null && m.Id == request.MovieId && m.Status == MovieStatus.Published, cancellationToken);
@@ -22,7 +20,7 @@ public class GetAllSessionsQueryHandler(IAppDbContext dbContext) : IRequestHandl
             throw new NotFoundMovieException(request.MovieId);
         }
 
-        var movieSessions = new GetAllSessionsFromMovieResponse()
+        var sessionAvailableSeats = new GetAvailableSeatsResponse()
         {
             MovieId = movie.Id,
             Title = movie.Title,
@@ -31,8 +29,8 @@ public class GetAllSessionsQueryHandler(IAppDbContext dbContext) : IRequestHandl
             Genre = movie.Genre,
             Status = movie.Status,
             Sessions = movie.Sessions
-                .Where(s => s.DeletedAt == null)
-                .Select(s => new GetAllSessionsResponse()
+                .Where(s => s.DeletedAt == null && s.Id == request.Id)
+                .Select(s => new GetSessionWithAvailableSeatsResponse()
                 {
                     Id = s.Id,
                     CinemaName = s.CinemaName,
@@ -40,10 +38,11 @@ public class GetAllSessionsQueryHandler(IAppDbContext dbContext) : IRequestHandl
                     TotalRows = s.TotalRows,
                     SeatsPerRow = s.SeatsPerRow,
                     Price = s.Price,
+                    Seats = s.Seats.Where(s => !s.IsBooked).ToList(),
                     StartTime = s.StartTime
                 }).ToList()
         };
 
-        return movieSessions;
+        return sessionAvailableSeats;
     }
 }

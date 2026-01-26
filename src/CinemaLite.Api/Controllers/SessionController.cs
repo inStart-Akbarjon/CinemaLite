@@ -2,6 +2,7 @@
 using CinemaLite.Application.CQRS.Session.Commands.DeleteSession;
 using CinemaLite.Application.CQRS.Session.Commands.UpdateSession;
 using CinemaLite.Application.CQRS.Session.Queries.GetAllSessions;
+using CinemaLite.Application.CQRS.Session.Queries.GetAvailableSeats;
 using CinemaLite.Application.CQRS.Session.Queries.GetSessionById;
 using CinemaLite.Application.DTOs.Session.Request;
 using CinemaLite.Application.DTOs.Session.Respone;
@@ -29,11 +30,25 @@ public class SessionController(IMediator mediator) : ControllerBase
         return await mediator.Send(query, cancellationToken);
     }
     
+    [HttpGet("{movieId}/sessions/{id}/seats/available")]
+    public async Task<GetAvailableSeatsResponse> GetSessionAvailableSeats([FromRoute] Guid movieId, [FromRoute] Guid id, CancellationToken cancellationToken) 
+    {
+        var query = new GetAvailableSeatsQuery(id, movieId);
+        return await mediator.Send(query, cancellationToken);
+    }
+    
     [Authorize]
     [HttpPost("{movieId}/sessions")]
     public async Task<CreateSessionResponse> CreateSession([FromRoute] Guid movieId, [FromBody] CreateSessionRequest request, CancellationToken cancellationToken) 
     {
-        var command = new CreateSessionCommand(movieId, request.CinemaName, request.AvailableSeats, request.Price, request.StartTime);
+        var command = new CreateSessionCommand(
+            movieId,
+            request.CinemaName,
+            request.Price,
+            request.TotalRows,
+            request.SeatsPerRow,
+            request.StartTime);
+        
         return await mediator.Send(command, cancellationToken);
     }
     
@@ -45,8 +60,9 @@ public class SessionController(IMediator mediator) : ControllerBase
             id,
             movieId,
             request.CinemaName,
-            request.Price, 
-            request.AvailableSeats, 
+            request.Price,  
+            request.TotalRows,
+            request.SeatsPerRow,
             request.StartTime
         );
         

@@ -14,6 +14,8 @@ public class SessionMapper : ISessionMapper
             Id = session.Id,
             CinemaName = session.CinemaName,
             AvailableSeats = session.AvailableSeats,
+            TotalRows = session.TotalRows,
+            SeatsPerRow = session.SeatsPerRow,
             Price = session.Price,
             StartTime = session.StartTime
         };
@@ -25,8 +27,10 @@ public class SessionMapper : ISessionMapper
         {
             Id = session.Id,
             CinemaName = session.CinemaName,
-            Price = session.Price,
             AvailableSeats = session.AvailableSeats,
+            TotalRows = session.TotalRows,
+            SeatsPerRow = session.SeatsPerRow,
+            Price = session.Price,
             StartTime = session.StartTime
         };
     }
@@ -38,6 +42,8 @@ public class SessionMapper : ISessionMapper
             Id = session.Id,
             CinemaName = session.CinemaName,
             AvailableSeats = session.AvailableSeats,
+            TotalRows = session.TotalRows,
+            SeatsPerRow = session.SeatsPerRow,
             Price = session.Price,
             StartTime = session.StartTime
         };
