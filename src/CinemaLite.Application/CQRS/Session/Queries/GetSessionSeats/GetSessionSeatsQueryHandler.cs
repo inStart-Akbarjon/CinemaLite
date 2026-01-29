@@ -5,11 +5,11 @@ using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaLite.Application.CQRS.Session.Queries.GetAvailableSeats;
+namespace CinemaLite.Application.CQRS.Session.Queries.GetSessionSeats;
 
-public class GetAvailableSeatsQueryHandler(IAppDbContext dbContext) : IRequestHandler<GetAvailableSeatsQuery, GetAvailableSeatsResponse>
+public class GetSessionSeatsQueryHandler(IAppDbContext dbContext) : IRequestHandler<GetSessionSeatsQuery, GetAvailableSeatsResponse>
 {
-    public async Task<GetAvailableSeatsResponse> Handle(GetAvailableSeatsQuery request, CancellationToken cancellationToken)
+    public async Task<GetAvailableSeatsResponse> Handle(GetSessionSeatsQuery request, CancellationToken cancellationToken)
     {
         var movie = await dbContext.Movies
             .AsNoTracking()
@@ -38,7 +38,7 @@ public class GetAvailableSeatsQueryHandler(IAppDbContext dbContext) : IRequestHa
                     TotalRows = s.TotalRows,
                     SeatsPerRow = s.SeatsPerRow,
                     Price = s.Price,
-                    Seats = s.Seats.Where(s => !s.IsBooked).ToList(),
+                    Seats = s.Seats.ToList(),
                     StartTime = s.StartTime
                 }).ToList()
         };
