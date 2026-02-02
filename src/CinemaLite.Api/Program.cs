@@ -1,6 +1,8 @@
+
 using CinemaLite.Api.Middlewares;
 using CinemaLite.Application.Extensions.Auth;
 using CinemaLite.Application.Extensions.Common;
+using CinemaLite.Infrastructure.BackgroundServices;
 using CinemaLite.Infrastructure.Database.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.AddJwtBearerConfiguration();
 builder.AddMediatorRegistrationService();
 builder.AddRedisLock();
 builder.Services.AddSwaggerConfiguration();
+builder.Services.AddHostedService<ExpireSessionWorker>();
 
 var app = builder.Build();
 
