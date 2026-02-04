@@ -1,14 +1,19 @@
-﻿using CinemaLite.Application.DTOs.Movie.Response;
+﻿using CinemaLite.Application.CQRS.Movie.Events;
+using CinemaLite.Application.DTOs.Movie.Response;
 using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Domain.Enums;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Movie.Commands.UpdateMovie;
 
-public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper movieMapper) : IRequestHandler<UpdateMovieCommand, UpdateMovieResponse>
+public class UpdateMovieCommandHandler(
+    IAppDbContext dbContext, 
+    IMovieMapper movieMapper, 
+    IPublishEndpoint publishEndpoint) : IRequestHandler<UpdateMovieCommand, UpdateMovieResponse>
 {
     public async Task<UpdateMovieResponse> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
     {
@@ -35,6 +40,11 @@ public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper mov
         
         dbContext.Movies.Update(movie);
         await dbContext.SaveChangesAsync(cancellationToken);
+        
+        await publishEndpoint.Publish(new MovieCacheInvalidationEvent()
+        {
+            Id = movie.Id,
+        }, cancellationToken);
         
         return movieMapper.ToUpdateMovieResponse(movie);
     }

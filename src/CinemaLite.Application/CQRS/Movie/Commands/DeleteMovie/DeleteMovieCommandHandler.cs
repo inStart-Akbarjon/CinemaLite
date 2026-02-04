@@ -1,12 +1,14 @@
-﻿using CinemaLite.Application.Exceptions.Movie;
+﻿using CinemaLite.Application.CQRS.Movie.Events;
+using CinemaLite.Application.Exceptions.Movie;
 using CinemaLite.Application.Interfaces.DbContext;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Movie.Commands.DeleteMovie;
 
-public class DeleteMovieCommandHandler(IAppDbContext dbContext) : IRequestHandler<DeleteMovieCommand, IActionResult>
+public class DeleteMovieCommandHandler(IAppDbContext dbContext, IPublishEndpoint publishEndpoint) : IRequestHandler<DeleteMovieCommand, IActionResult>
 {
     public async Task<IActionResult> Handle(DeleteMovieCommand request, CancellationToken cancellationToken)
     {
@@ -22,6 +24,11 @@ public class DeleteMovieCommandHandler(IAppDbContext dbContext) : IRequestHandle
         
         await  dbContext.SaveChangesAsync(cancellationToken);
 
+        await publishEndpoint.Publish(new MovieCacheInvalidationEvent()
+        {
+            Id = movie.Id,
+        }, cancellationToken);
+        
         return new OkResult();
     }
 }

@@ -1,8 +1,7 @@
-﻿using System.Security.Claims;
-using CinemaLite.Application.Services.Implementations.Auth;
+﻿using CinemaLite.Application.Services.Interfaces.Auth;
 using Microsoft.AspNetCore.Http;
 
-namespace CinemaLite.Application.Services.Interfaces.Auth;
+namespace CinemaLite.Application.Services.Implementations.Auth;
 
 public class CurrentUserService : ICurrentUserService
 {
