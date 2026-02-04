@@ -14,7 +14,7 @@ public static class MassTransitConfiguration
             {
                 var messageBrokerSettings = context.GetRequiredService<MessageBrokerSettings>();
 
-                cfg.Host(messageBrokerSettings.Host, "/", h =>
+                cfg.Host(messageBrokerSettings.Host, messageBrokerSettings.Port, "/", h =>
                 {
                     h.Username(messageBrokerSettings.Username);
                     h.Password(messageBrokerSettings.Password);
