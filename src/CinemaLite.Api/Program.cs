@@ -1,4 +1,3 @@
-using CinemaLite.Api.Extensions.MessageBroker;
 using CinemaLite.Api.Middlewares;
 using CinemaLite.Application.Extensions.Auth;
 using CinemaLite.Application.Extensions.Common;
@@ -16,7 +15,6 @@ builder.AddJwtBearerConfiguration();
 builder.AddMediatorRegistrationService();
 builder.AddRedisLock();
 builder.AddRedisCache();
-builder.AddRabbitMqConnection();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddHostedService<ExpireSessionWorker>();
 

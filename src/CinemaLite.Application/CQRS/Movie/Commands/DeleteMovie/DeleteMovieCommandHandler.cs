@@ -1,14 +1,18 @@
-﻿using CinemaLite.Application.CQRS.Movie.Events;
-using CinemaLite.Application.Exceptions.Movie;
+﻿using CinemaLite.Application.Exceptions.Movie;
+using CinemaLite.Application.Extensions.RedisCache;
 using CinemaLite.Application.Interfaces.DbContext;
-using MassTransit;
+using CinemaLite.Application.Models.Cache;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace CinemaLite.Application.CQRS.Movie.Commands.DeleteMovie;
 
-public class DeleteMovieCommandHandler(IAppDbContext dbContext, IPublishEndpoint publishEndpoint) : IRequestHandler<DeleteMovieCommand, IActionResult>
+public class DeleteMovieCommandHandler(
+    IAppDbContext dbContext,
+    IConnectionMultiplexer redis
+    ) : IRequestHandler<DeleteMovieCommand, IActionResult>
 {
     public async Task<IActionResult> Handle(DeleteMovieCommand request, CancellationToken cancellationToken)
     {
@@ -23,11 +27,8 @@ public class DeleteMovieCommandHandler(IAppDbContext dbContext, IPublishEndpoint
         movie.SoftDelete();
         
         await  dbContext.SaveChangesAsync(cancellationToken);
-
-        await publishEndpoint.Publish(new MovieCacheInvalidationEvent()
-        {
-            Id = movie.Id,
-        }, cancellationToken);
+        
+        await redis.InvalidateAsync(MoviesCacheKeys.Registry);
         
         return new OkResult();
     }
