@@ -6,6 +6,7 @@ using CinemaLite.Application.Exceptions.Session;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Exceptions.Ticket;
 using CinemaLite.Application.Exceptions.Movie;
+using CinemaLite.Application.Services.Interfaces.Auth;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 

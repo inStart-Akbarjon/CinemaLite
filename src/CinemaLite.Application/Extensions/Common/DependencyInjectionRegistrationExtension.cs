@@ -1,7 +1,9 @@
 ﻿using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Mappers;
 using CinemaLite.Application.Services.Implementations.Auth;
+using CinemaLite.Application.Services.Implementations.RedisDistributedCache;
 using CinemaLite.Application.Services.Interfaces.Auth;
+using CinemaLite.Application.Services.Interfaces.RedisDistributedCache;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +22,7 @@ public static class DependencyInjectionRegistrationExtension
             
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+        builder.Services.AddScoped<IMovieCacheService, MovieCacheService>();
         
         return builder;
     }

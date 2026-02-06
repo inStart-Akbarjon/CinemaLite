@@ -1,14 +1,20 @@
 ﻿using CinemaLite.Application.DTOs.Movie.Response;
 using CinemaLite.Application.Exceptions.Movie;
+using CinemaLite.Application.Extensions.RedisCache;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
+using CinemaLite.Application.Models.Cache;
 using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace CinemaLite.Application.CQRS.Movie.Commands.UpdateMovie;
 
-public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper movieMapper) : IRequestHandler<UpdateMovieCommand, UpdateMovieResponse>
+public class UpdateMovieCommandHandler(
+    IAppDbContext dbContext, 
+    IMovieMapper movieMapper,
+    IConnectionMultiplexer redis) : IRequestHandler<UpdateMovieCommand, UpdateMovieResponse>
 {
     public async Task<UpdateMovieResponse> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
     {
@@ -35,6 +41,8 @@ public class UpdateMovieCommandHandler(IAppDbContext dbContext, IMovieMapper mov
         
         dbContext.Movies.Update(movie);
         await dbContext.SaveChangesAsync(cancellationToken);
+        
+        await redis.InvalidateAsync(MoviesCacheKeys.Registry);
         
         return movieMapper.ToUpdateMovieResponse(movie);
     }

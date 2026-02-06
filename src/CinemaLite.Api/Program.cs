@@ -1,4 +1,3 @@
-
 using CinemaLite.Api.Middlewares;
 using CinemaLite.Application.Extensions.Auth;
 using CinemaLite.Application.Extensions.Common;
@@ -15,6 +14,7 @@ builder.AddDependencyInjectionRegistrationService();
 builder.AddJwtBearerConfiguration();
 builder.AddMediatorRegistrationService();
 builder.AddRedisLock();
+builder.AddRedisCache();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddHostedService<ExpireSessionWorker>();
 

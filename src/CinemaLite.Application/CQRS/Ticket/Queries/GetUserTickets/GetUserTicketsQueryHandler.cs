@@ -3,6 +3,7 @@ using CinemaLite.Application.Exceptions.Ticket;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Services.Implementations.Auth;
+using CinemaLite.Application.Services.Interfaces.Auth;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
