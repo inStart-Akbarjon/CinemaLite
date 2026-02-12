@@ -9,5 +9,7 @@ public class Movie : BaseEntity
     public required string Genre { get; set; }
     public MovieStatus Status { get; set; }
     public decimal MinPrice { get; set; }
+    public bool IsTop { get; set; }
+    public int TopSubscriptionPeriod { get; set; }
     public List<Session> Sessions { get; set; } = [];
 }

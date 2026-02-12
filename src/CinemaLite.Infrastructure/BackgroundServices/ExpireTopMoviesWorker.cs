@@ -10,7 +10,7 @@ using StackExchange.Redis;
 
 namespace CinemaLite.Infrastructure.BackgroundServices;
 
-public class ExpireSessionWorker(
+public class ExpireTopMoviesWorker(
     IServiceScopeFactory scopeFactory, 
     ILogger<ExpireSessionWorker> logger, 
     IConnectionMultiplexer redis) : BackgroundService
@@ -22,7 +22,7 @@ public class ExpireSessionWorker(
             using var scope = scopeFactory.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            var nextRun = DateTime.Today.AddHours(1);
+            var nextRun = DateTime.Today.AddHours(23).AddMinutes(30);
             if (nextRun < DateTime.Now)
             {
                 nextRun = nextRun.AddDays(1);
@@ -32,26 +32,19 @@ public class ExpireSessionWorker(
 
             await Task.Delay(waitTime, stoppingToken);
 
-            logger.LogInformation("Worker started at {time}", DateTimeOffset.Now);
+            logger.LogInformation("Expire TopMovies worker started at {time}", DateTimeOffset.Now);
             
-            var movies = await dbContext.Movies.Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published)
+            var movies = await dbContext.Movies.Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published && m.IsTop == true)
                 .ToListAsync(stoppingToken);
             
             foreach (var movie in movies)
             {
-                foreach (var session in movie.Sessions.Where(session =>
-                             session.DeletedAt == null && session.StartTime <= DateTime.Now))
+                if (movie.CreatedAt.AddDays(movie.TopSubscriptionPeriod) < DateTime.Now)
                 {
-                    session.DeletedAt = DateTime.Now;
+                    movie.IsTop = false;
+                    movie.TopSubscriptionPeriod = 0;
                 }
-
-                var nonExpiredSessions = movie.Sessions.Where(s => s.DeletedAt == null).ToList();
-
-                if (nonExpiredSessions.Count == 0)
-                {
-                    movie.Status = MovieStatus.UnPublished;
-                }
-
+                
                 dbContext.Movies.Update(movie);
             }
             
@@ -60,7 +53,7 @@ public class ExpireSessionWorker(
             
             await dbContext.SaveChangesAsync(stoppingToken);
 
-            logger.LogInformation("Worker ended job at {time}", DateTimeOffset.Now);
+            logger.LogInformation("Expire TopMovies worker ended job at {time}", DateTimeOffset.Now);
             
         } while (!stoppingToken.IsCancellationRequested);
     }

@@ -9,12 +9,12 @@ using StackExchange.Redis;
 
 namespace CinemaLite.Application.Services.Implementations.RedisDistributedCache;
 
-public class MovieCacheService(IDistributedCache cache, IConnectionMultiplexer redis) : IMovieCacheService
+public class TopMovieCacheService(IDistributedCache cache, IConnectionMultiplexer redis) : ITopMovieCacheService
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>?> GetAllMoviesFromCacheAsync(string cacheKey)
+    public async Task<PaginatedMovieList<GetAllMoviesResponse>?> GetTopMoviesFromCacheAsync(string cacheKey)
     {
         var cached = await cache.GetStringAsync(cacheKey);
-        
+
         if (cached != null)
         {
             return JsonConvert.DeserializeObject<PaginatedMovieList<GetAllMoviesResponse>?>(cached);
@@ -23,7 +23,7 @@ public class MovieCacheService(IDistributedCache cache, IConnectionMultiplexer r
         return null;
     }
 
-    public async Task AddMoviesToCacheAsync(string cacheKey, PaginatedMovieList<GetAllMoviesResponse> movies)
+    public async Task AddTopMoviesToCacheAsync(string cacheKey, PaginatedMovieList<GetAllMoviesResponse> movies)
     {
         var options = new DistributedCacheEntryOptions()
         {
@@ -35,7 +35,7 @@ public class MovieCacheService(IDistributedCache cache, IConnectionMultiplexer r
         
         var db = redis.GetDatabase();
         await db.SetAddAsync(
-            MoviesCacheKeys.Registry,
+            TopMoviesCacheKeys.Registry,
             cacheKey);
     }
 }

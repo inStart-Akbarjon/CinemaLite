@@ -8,18 +8,16 @@ using CinemaLite.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaLite.Application.CQRS.Movie.Queries.GetAllMovies;
+namespace CinemaLite.Application.CQRS.Movie.Queries.GetTopMovies;
 
-public class GetAllMoviesQueryHandler(
-    IAppDbContext dbContext, 
-    IMovieCacheService movieCacheService) : IRequestHandler<GetAllMoviesQuery, PaginatedMovieList<GetAllMoviesResponse>>
+public class GetTopMoviesQueryHandler(IAppDbContext dbContext, ITopMovieCacheService topMovieCacheService) : IRequestHandler<GetTopMoviesQuery, PaginatedMovieList<GetAllMoviesResponse>>
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(GetTopMoviesQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = MoviesCacheKeys.Page(request.PageNumber, request.PageSize);
+        var cacheKey = TopMoviesCacheKeys.Page(request.PageNumber, request.PageSize);
         
-        var cachedMovies = await movieCacheService.GetAllMoviesFromCacheAsync(cacheKey);
-        
+        var cachedMovies = await topMovieCacheService.GetTopMoviesFromCacheAsync(cacheKey);
+
         if (cachedMovies != null)
         {
             return cachedMovies;
@@ -27,11 +25,11 @@ public class GetAllMoviesQueryHandler(
         
         var movies = await dbContext.Movies
             .AsNoTracking()
-            .Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published)
+            .Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published && m.IsTop == true)
             .ToGetAllMoviesResponse()
             .PaginateAsync(request.PageNumber, request.PageSize, cancellationToken);
             
-        await movieCacheService.AddMoviesToCacheAsync(cacheKey, movies);
+        await topMovieCacheService.AddTopMoviesToCacheAsync(cacheKey, movies);
         
         return movies;
     }

@@ -39,6 +39,8 @@ public static class PaginationExtension
                 DurationMinutes = x.DurationMinutes,
                 Status = x.Status,
                 MinPrice = x.MinPrice,
+                IsTop = x.IsTop,
+                TopSubscriptionPeriod = x.TopSubscriptionPeriod,
                 Genre = x.Genre,
             });
 

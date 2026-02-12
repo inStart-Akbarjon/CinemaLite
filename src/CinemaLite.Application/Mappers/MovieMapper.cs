@@ -15,6 +15,8 @@ public class MovieMapper : IMovieMapper
             Title = movie.Title,
             DurationMinutes = movie.DurationMinutes,
             Genre = movie.Genre,
+            IsTop = movie.IsTop,
+            TopSubscriptionPeriod = movie.TopSubscriptionPeriod,
             Status = MovieStatus.UnPublished
         };
     }
@@ -29,6 +31,8 @@ public class MovieMapper : IMovieMapper
             Title = movie.Title,
             DurationMinutes = movie.DurationMinutes,
             Genre = movie.Genre,
+            IsTop = movie.IsTop,
+            TopSubscriptionPeriod = movie.TopSubscriptionPeriod,
             Status = movieStatus
         };
     }
@@ -44,6 +48,8 @@ public class MovieMapper : IMovieMapper
             DurationMinutes = movie.DurationMinutes,
             Genre = movie.Genre,
             MinPrice = movie.MinPrice,
+            IsTop = movie.IsTop,
+            TopSubscriptionPeriod = movie.TopSubscriptionPeriod,
             Status = movieStatus
         };
     }
@@ -59,6 +65,8 @@ public class MovieMapper : IMovieMapper
             DurationMinutes = movie.DurationMinutes,
             MinPrice = movie.MinPrice,
             Genre = movie.Genre,
+            IsTop = movie.IsTop,
+            TopSubscriptionPeriod = movie.TopSubscriptionPeriod,
             Status = movieStatus
         };
     }
