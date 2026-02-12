@@ -26,7 +26,7 @@ public class MovieController(IMediator mediator) : ControllerBase
     }
     
     [HttpGet("top")]
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetTopMovies([FromQuery] GetTopMoviesQuery request, CancellationToken cancellationToken) 
+    public async Task<PaginatedMovieList<GetTopMoviesResponse>> GetTopMovies([FromQuery] GetTopMoviesQuery request, CancellationToken cancellationToken) 
     {
         return await mediator.Send(request, cancellationToken);
     }

@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Movie.Queries.GetTopMovies;
 
-public class GetTopMoviesQueryHandler(IAppDbContext dbContext, ITopMovieCacheService topMovieCacheService) : IRequestHandler<GetTopMoviesQuery, PaginatedMovieList<GetAllMoviesResponse>>
+public class GetTopMoviesQueryHandler(IAppDbContext dbContext, ITopMovieCacheService topMovieCacheService) : IRequestHandler<GetTopMoviesQuery, PaginatedMovieList<GetTopMoviesResponse>>
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(GetTopMoviesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedMovieList<GetTopMoviesResponse>> Handle(GetTopMoviesQuery request, CancellationToken cancellationToken)
     {
         var cacheKey = TopMoviesCacheKeys.Page(request.PageNumber, request.PageSize);
         
@@ -26,7 +26,7 @@ public class GetTopMoviesQueryHandler(IAppDbContext dbContext, ITopMovieCacheSer
         var movies = await dbContext.Movies
             .AsNoTracking()
             .Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published && m.IsTop == true)
-            .ToGetAllMoviesResponse()
+            .ToGetTopMoviesResponse()
             .PaginateAsync(request.PageNumber, request.PageSize, cancellationToken);
             
         await topMovieCacheService.AddTopMoviesToCacheAsync(cacheKey, movies);
