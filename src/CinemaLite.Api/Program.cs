@@ -17,6 +17,7 @@ builder.AddRedisLock();
 builder.AddRedisCache();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddHostedService<ExpireSessionWorker>();
+builder.Services.AddHostedService<ExpireTopMoviesWorker>();
 
 var app = builder.Build();
 

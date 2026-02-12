@@ -17,7 +17,7 @@ public class MovieTests(IntegrationTestWebAppFactory factory) : BaseTest(factory
         // Arrange
         var token = await GetJwtToken(nameof(UserRole.Customer));
 
-        var createCommand = new CreateMovieCommand("Spider Man", 120, "Action");
+        var createCommand = new CreateMovieCommand("Spider Man", 120, "Action", false, 0);
         
         // Act
         Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

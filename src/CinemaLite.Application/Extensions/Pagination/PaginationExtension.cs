@@ -39,9 +39,30 @@ public static class PaginationExtension
                 DurationMinutes = x.DurationMinutes,
                 Status = x.Status,
                 MinPrice = x.MinPrice,
+                IsTop = x.IsTop,
+                TopSubscriptionPeriod = x.TopSubscriptionPeriod,
                 Genre = x.Genre,
             });
 
         return allMoviesResponses;
+    }
+    
+    public static IQueryable<GetTopMoviesResponse> ToGetTopMoviesResponse(
+        this IQueryable<Movie> queryable)
+    {
+        var topMoviesResponses = queryable.Select(x =>
+            new GetTopMoviesResponse()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                DurationMinutes = x.DurationMinutes,
+                Status = x.Status,
+                MinPrice = x.MinPrice,
+                IsTop = x.IsTop,
+                TopSubscriptionPeriod = x.TopSubscriptionPeriod,
+                Genre = x.Genre,
+            });
+
+        return topMoviesResponses;
     }
 }

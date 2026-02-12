@@ -23,6 +23,7 @@ public static class DependencyInjectionRegistrationExtension
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
         builder.Services.AddScoped<IMovieCacheService, MovieCacheService>();
+        builder.Services.AddScoped<ITopMovieCacheService, TopMovieCacheService>();
         
         return builder;
     }

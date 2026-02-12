@@ -6,6 +6,7 @@ using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Models.Cache;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using StackExchange.Redis;
 
 namespace CinemaLite.Application.CQRS.Movie.Commands.CreateMovie;
@@ -32,6 +33,11 @@ public class CreateMovieCommandHandler(
         await dbContext.SaveChangesAsync(cancellationToken);
 
         await redis.InvalidateAsync(MoviesCacheKeys.Registry);
+
+        if (movie.IsTop)
+        {
+            await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
+        }
         
         return movieMapper.ToCreateMovieResponse(movie);
     }
