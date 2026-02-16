@@ -30,6 +30,11 @@ public class DeleteMovieCommandHandler(
         
         await redis.InvalidateAsync(MoviesCacheKeys.Registry);
         
+        if (movie.IsTop)
+        {
+            await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
+        }
+        
         return new OkResult();
     }
 }

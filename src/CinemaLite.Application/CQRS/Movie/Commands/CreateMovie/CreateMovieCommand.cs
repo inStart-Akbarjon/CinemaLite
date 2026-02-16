@@ -6,7 +6,9 @@ namespace CinemaLite.Application.CQRS.Movie.Commands.CreateMovie;
 public record CreateMovieCommand(
     string Title,
     int DurationMinutes,
-    string Genre
+    string Genre,
+    bool IsTop,
+    int TopSubscriptionPeriod
 ) : IRequest<CreateMovieResponse>
 {
 }
