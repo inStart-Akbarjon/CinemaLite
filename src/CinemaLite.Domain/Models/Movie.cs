@@ -11,5 +11,6 @@ public class Movie : BaseEntity
     public decimal MinPrice { get; set; }
     public bool IsTop { get; set; }
     public int TopSubscriptionPeriod { get; set; }
+    public DateTime? TopSubscriptionStartDate { get; set; }
     public List<Session> Sessions { get; set; } = [];
 }

@@ -6,7 +6,6 @@ using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Models.Cache;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using StackExchange.Redis;
 
 namespace CinemaLite.Application.CQRS.Movie.Commands.CreateMovie;
@@ -28,6 +27,11 @@ public class CreateMovieCommandHandler(
         }
         
         var movie = movieMapper.ToMovieEntityFromCreateMovieCommand(request);
+        
+        if (movie.IsTop)
+        {
+            movie.TopSubscriptionStartDate = DateTime.UtcNow;
+        }
         
         await dbContext.Movies.AddAsync(movie, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);

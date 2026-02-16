@@ -6,7 +6,6 @@ using CinemaLite.Application.Interfaces.Mappers;
 using CinemaLite.Application.Models.Cache;
 using CinemaLite.Domain.Enums;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -42,15 +41,20 @@ public class UpdateMovieCommandHandler(
         movie.IsTop = request.IsTop;
         movie.TopSubscriptionPeriod = request.TopSubscriptionPeriod;
         
+        if (movie.IsTop)
+        {
+            movie.TopSubscriptionStartDate = DateTime.UtcNow;
+        }
+        else
+        {
+            movie.TopSubscriptionStartDate = null;
+        }
+        
         dbContext.Movies.Update(movie);
         await dbContext.SaveChangesAsync(cancellationToken);
         
         await redis.InvalidateAsync(MoviesCacheKeys.Registry);
-        
-        if (movie.IsTop)
-        {
-            await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
-        }
+        await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
         
         return movieMapper.ToUpdateMovieResponse(movie);
     }

@@ -34,15 +34,16 @@ public class ExpireTopMoviesWorker(
 
             logger.LogInformation("Expire TopMovies worker started at {time}", DateTimeOffset.Now);
             
-            var movies = await dbContext.Movies.Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published && m.IsTop == true)
+            var movies = await dbContext.Movies.Where(m => m.DeletedAt == null && m.Status == MovieStatus.Published && m.IsTop)
                 .ToListAsync(stoppingToken);
             
             foreach (var movie in movies)
             {
-                if (movie.CreatedAt.AddDays(movie.TopSubscriptionPeriod) < DateTime.Now)
+                if (movie.TopSubscriptionStartDate?.AddDays(movie.TopSubscriptionPeriod) < DateTime.Now)
                 {
                     movie.IsTop = false;
                     movie.TopSubscriptionPeriod = 0;
+                    movie.TopSubscriptionStartDate = null;
                 }
                 
                 dbContext.Movies.Update(movie);
