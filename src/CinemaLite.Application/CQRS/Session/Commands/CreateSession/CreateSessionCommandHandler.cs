@@ -1,16 +1,22 @@
 ﻿using CinemaLite.Application.DTOs.Session.Respone;
 using CinemaLite.Application.Exceptions.Movie;
-    using CinemaLite.Application.Extensions.SessionSeats;
+using CinemaLite.Application.Extensions.RedisCache;
+using CinemaLite.Application.Extensions.SessionSeats;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Interfaces.Mappers;
+using CinemaLite.Application.Models.Cache;
 using CinemaLite.Domain.Enums;
 using CinemaLite.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace CinemaLite.Application.CQRS.Session.Commands.CreateSession;
 
-public class CreateSessionCommandHandler(IAppDbContext dbContext, ISessionMapper sessionMapper) : IRequestHandler<CreateSessionCommand, CreateSessionResponse>
+public class CreateSessionCommandHandler(
+    IAppDbContext dbContext, 
+    ISessionMapper sessionMapper,
+    IConnectionMultiplexer redis) : IRequestHandler<CreateSessionCommand, CreateSessionResponse>
 {
     public async Task<CreateSessionResponse> Handle(CreateSessionCommand request, CancellationToken cancellationToken)
     {
@@ -54,6 +60,9 @@ public class CreateSessionCommandHandler(IAppDbContext dbContext, ISessionMapper
         }
         
         await dbContext.SaveChangesAsync(cancellationToken);
+        
+        await redis.InvalidateAsync(MoviesCacheKeys.Registry);
+        await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
         
         return sessionMapper.ToCreateSessionResponse(session);
     }

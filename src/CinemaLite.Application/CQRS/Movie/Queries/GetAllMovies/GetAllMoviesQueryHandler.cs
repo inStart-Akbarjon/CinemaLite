@@ -19,7 +19,7 @@ public class GetAllMoviesQueryHandler(
         var cacheKey = MoviesCacheKeys.Page(request.PageNumber, request.PageSize);
         
         var cachedMovies = await movieCacheService.GetAllMoviesFromCacheAsync(cacheKey);
-
+        
         if (cachedMovies != null)
         {
             return cachedMovies;

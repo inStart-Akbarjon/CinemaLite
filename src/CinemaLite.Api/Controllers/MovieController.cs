@@ -3,6 +3,7 @@ using CinemaLite.Application.CQRS.Movie.Commands.DeleteMovie;
 using CinemaLite.Application.CQRS.Movie.Commands.UpdateMovie;
 using CinemaLite.Application.CQRS.Movie.Queries.GetAllMovies;
 using CinemaLite.Application.CQRS.Movie.Queries.GetMovieById;
+using CinemaLite.Application.CQRS.Movie.Queries.GetTopMovies;
 using CinemaLite.Application.CQRS.Movie.Queries.GetUnpublishedMovies;
 using CinemaLite.Application.CQRS.Movie.Queries.SearchMovies;
 using CinemaLite.Application.DTOs.Movie.Request;
@@ -20,6 +21,12 @@ public class MovieController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetAllMovies([FromQuery] GetAllMoviesQuery request, CancellationToken cancellationToken) 
+    {
+        return await mediator.Send(request, cancellationToken);
+    }
+    
+    [HttpGet("top")]
+    public async Task<PaginatedMovieList<GetTopMoviesResponse>> GetTopMovies([FromQuery] GetTopMoviesQuery request, CancellationToken cancellationToken) 
     {
         return await mediator.Send(request, cancellationToken);
     }
@@ -63,7 +70,9 @@ public class MovieController(IMediator mediator) : ControllerBase
             id,
             request.Title,
             request.DurationMinutes,
-            request.Genre);
+            request.Genre,
+            request.IsTop,
+            request.TopSubscriptionPeriod);
         
         return await mediator.Send(command, cancellationToken);
     }

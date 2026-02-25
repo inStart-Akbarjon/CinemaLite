@@ -28,10 +28,20 @@ public class CreateMovieCommandHandler(
         
         var movie = movieMapper.ToMovieEntityFromCreateMovieCommand(request);
         
+        if (movie.IsTop)
+        {
+            movie.TopSubscriptionStartDate = DateTime.UtcNow;
+        }
+        
         await dbContext.Movies.AddAsync(movie, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         await redis.InvalidateAsync(MoviesCacheKeys.Registry);
+
+        if (movie.IsTop)
+        {
+            await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
+        }
         
         return movieMapper.ToCreateMovieResponse(movie);
     }

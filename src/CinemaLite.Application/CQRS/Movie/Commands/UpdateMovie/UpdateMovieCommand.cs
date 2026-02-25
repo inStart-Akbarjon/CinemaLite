@@ -7,7 +7,9 @@ public record UpdateMovieCommand(
     Guid Id,
     string Title,
     int DurationMinutes,
-    string Genre
+    string Genre,
+    bool IsTop,
+    int TopSubscriptionPeriod
 ) : IRequest<UpdateMovieResponse>
 {
     

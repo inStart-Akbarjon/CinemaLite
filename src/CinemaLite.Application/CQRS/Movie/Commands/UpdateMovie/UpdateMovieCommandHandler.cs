@@ -29,7 +29,7 @@ public class UpdateMovieCommandHandler(
         
         var movie = await dbContext.Movies
             .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedAt == null, cancellationToken);
-
+        
         if (movie is null)
         {
             throw new NotFoundMovieException(request.Id);
@@ -38,11 +38,23 @@ public class UpdateMovieCommandHandler(
         movie.Title = request.Title;
         movie.DurationMinutes = request.DurationMinutes;
         movie.Genre = request.Genre;
+        movie.IsTop = request.IsTop;
+        movie.TopSubscriptionPeriod = request.TopSubscriptionPeriod;
+        
+        if (movie.IsTop)
+        {
+            movie.TopSubscriptionStartDate = DateTime.UtcNow;
+        }
+        else
+        {
+            movie.TopSubscriptionStartDate = null;
+        }
         
         dbContext.Movies.Update(movie);
         await dbContext.SaveChangesAsync(cancellationToken);
         
         await redis.InvalidateAsync(MoviesCacheKeys.Registry);
+        await redis.InvalidateAsync(TopMoviesCacheKeys.Registry);
         
         return movieMapper.ToUpdateMovieResponse(movie);
     }

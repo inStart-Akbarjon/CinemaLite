@@ -21,5 +21,15 @@ public class UpdateMovieCommandValidator : AbstractValidator<UpdateMovieRequest>
         RuleFor(movie => movie.Genre)
             .NotEmpty()
             .WithMessage("Genre is required");
+        
+        RuleFor(x => x.TopSubscriptionPeriod)
+            .GreaterThan(0)
+            .When(x => x.IsTop)
+            .WithMessage("TopSubscriptionPeriod must be greater than 0 when IsTop is true.");
+
+        RuleFor(x => x.TopSubscriptionPeriod)
+            .Equal(0)
+            .When(x => !x.IsTop)
+            .WithMessage("TopSubscriptionPeriod must be 0 when IsTop is false.");
     }
 }
