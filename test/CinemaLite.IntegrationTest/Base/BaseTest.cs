@@ -26,7 +26,8 @@ public class BaseTest : IAsyncLifetime, IClassFixture<IntegrationTestWebAppFacto
         var user = new ApplicationUser
         {
             UserName = "test_user",
-            Email = $"test_email@test.com"
+            Email = $"test_email@test.com",
+            PhoneNumber = $"+992175656006"
         };
 
         db.Users.Add(user);
