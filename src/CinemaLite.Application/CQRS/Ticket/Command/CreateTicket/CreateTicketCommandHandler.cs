@@ -24,6 +24,8 @@ public class CreateTicketCommandHandler(
     )
     {
         var userId = currentUserService.UserId;
+        var userPhone = currentUserService.UserPhone;
+        var userEmail = currentUserService.UserEmail;
         
         var movie = await dbContext.Movies
             .FirstOrDefaultAsync(m => m.Id == request.MovieId && m.DeletedAt == null, cancellationToken);
@@ -67,7 +69,7 @@ public class CreateTicketCommandHandler(
         
         seat.IsBooked = true;
         
-        var ticket = ticketMapper.ToTicketEntity(request, movie, session, seat, userId);
+        var ticket = ticketMapper.ToTicketEntity(request, movie, session, seat, userId, userPhone, userEmail);
         
         session.ReduceAvailableSeatsByOne(session.AvailableSeats);
         dbContext.Movies.Update(movie);

@@ -1,3 +1,4 @@
+using CinemaLite.Api.Extensions;
 using CinemaLite.Api.Middlewares;
 using CinemaLite.Application.Extensions.Auth;
 using CinemaLite.Application.Extensions.Common;
@@ -15,9 +16,11 @@ builder.AddJwtBearerConfiguration();
 builder.AddMediatorRegistrationService();
 builder.AddRedisLock();
 builder.AddRedisCache();
+builder.AddRabbitMq();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddHostedService<ExpireSessionWorker>();
 builder.Services.AddHostedService<ExpireTopMoviesWorker>();
+builder.Services.AddHostedService<UserReminderWorker>();
 
 var app = builder.Build();
 

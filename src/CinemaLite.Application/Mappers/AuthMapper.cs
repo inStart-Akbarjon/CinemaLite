@@ -12,6 +12,7 @@ public class AuthMapper : IAuthMapper
         return new ApplicationUser()
         {
             Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
             UserName = user.Email
         };
     }
