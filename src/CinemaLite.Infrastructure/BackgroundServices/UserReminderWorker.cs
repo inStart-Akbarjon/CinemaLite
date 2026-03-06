@@ -59,21 +59,24 @@ public class UserReminderWorker(
                 {
                     if (ticket.StartTime.Date == DateTime.Today.AddDays(5))
                     {
-                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime).FiveDaysBeforeMovieReminderMessage;
+                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime)
+                            .FiveDaysBeforeMovieReminderMessage;
                     
                         await SendReminder(ticket, message);
                     }
                 
                     if (ticket.StartTime.Date == DateTime.Today.AddDays(3))
                     {
-                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime).ThreeDaysBeforeMovieReminderMessage;
+                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime)
+                            .ThreeDaysBeforeMovieReminderMessage;
                     
                         await SendReminder(ticket, message);
                     }
                 
                     if (ticket.StartTime.Date == DateTime.Today)
                     {
-                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime).ZeroDayBeforeMovieReminderMessage;
+                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime)
+                            .ZeroDayBeforeMovieReminderMessage;
                     
                         await SendReminder(ticket, message);
                     }
