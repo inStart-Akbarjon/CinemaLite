@@ -69,7 +69,14 @@ public class CreateTicketCommandHandler(
         
         seat.IsBooked = true;
         
-        var ticket = ticketMapper.ToTicketEntity(request, movie, session, seat, userId, userPhone, userEmail);
+        var ticket = ticketMapper.ToTicketEntity(
+            request, 
+            movie, 
+            session, 
+            seat, 
+            userId, 
+            userPhone, 
+            userEmail);
         
         session.ReduceAvailableSeatsByOne(session.AvailableSeats);
         dbContext.Movies.Update(movie);

@@ -1,4 +1,4 @@
-﻿using CinemaLite.Application.Models.Notification.UserReminderMessages;
+﻿using CinemaLite.Application.Models.Notification;
 using CinemaLite.Application.Services.Implementations.RedisDistributedLock;
 using CinemaLite.Contracts.Events;
 using CinemaLite.Domain.Models;
@@ -22,7 +22,7 @@ public class UserReminderWorker(
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             var publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
 
-            var nextRun = DateTime.Today.AddHours(12).AddMinutes(52);
+            var nextRun = DateTime.Today.AddHours(5);
             if (nextRun < DateTime.Now)
             {
                 nextRun = nextRun.AddDays(1);
@@ -59,21 +59,21 @@ public class UserReminderWorker(
                 {
                     if (ticket.StartTime.Date == DateTime.Today.AddDays(5))
                     {
-                        var message = new FiveDaysBeforeMovieReminderMessage(ticket.MovieTitle, ticket.StartTime).Message;
+                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime).FiveDaysBeforeMovieReminderMessage;
                     
                         await SendReminder(ticket, message);
                     }
                 
                     if (ticket.StartTime.Date == DateTime.Today.AddDays(3))
                     {
-                        var message = new ThreeDaysBeforeMovieReminderMessage(ticket.MovieTitle, ticket.StartTime).Message;
+                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime).ThreeDaysBeforeMovieReminderMessage;
                     
                         await SendReminder(ticket, message);
                     }
                 
                     if (ticket.StartTime.Date == DateTime.Today)
                     {
-                        var message = new ZeroDayBeforeMovieReminderMessage(ticket.MovieTitle, ticket.StartTime).Message;
+                        var message = new UserReminderMessages(ticket.MovieTitle, ticket.StartTime).ZeroDayBeforeMovieReminderMessage;
                     
                         await SendReminder(ticket, message);
                     }
