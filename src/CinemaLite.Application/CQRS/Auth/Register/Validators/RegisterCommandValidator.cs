@@ -18,5 +18,11 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .WithMessage("Password is required.")
             .Must(password => password.Length > 6)
             .WithMessage("Password should be more than 6 characters.");
+        
+        RuleFor(c => c.PhoneNumber)
+            .NotEmpty()
+            .WithMessage("PhoneNumber is required.")
+            .Must(phoneNumber => phoneNumber.Length == 13)
+            .WithMessage("PhoneNumber should be 13 characters.");
     }
 }

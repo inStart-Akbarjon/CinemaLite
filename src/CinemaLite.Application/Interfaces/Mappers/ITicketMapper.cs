@@ -6,7 +6,14 @@ namespace CinemaLite.Application.Interfaces.Mappers;
 
 public interface ITicketMapper
 {
-    public Ticket ToTicketEntity(CreateTicketCommand request, Movie movie, Session session, Seat seat, int userId);
+    public Ticket ToTicketEntity(
+        CreateTicketCommand request, 
+        Movie movie, 
+        Session session, 
+        Seat seat, 
+        int userId, 
+        string userPhone, 
+        string userEmail);
     
     public CreateTicketResponse ToCreateTicketResponse(Ticket request);
     
