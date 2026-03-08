@@ -13,7 +13,7 @@ public class AuthController(IMediator mediator) : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> RegisterCustomer([FromBody] RegisterCommand request)
     {
-        var command = new RegisterCommand(request.Email, request.Password);
+        var command = new RegisterCommand(request.Email, request.PhoneNumber, request.Password);
         return await mediator.Send(command);
     }
     

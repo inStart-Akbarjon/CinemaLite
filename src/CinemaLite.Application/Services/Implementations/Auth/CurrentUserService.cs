@@ -1,4 +1,5 @@
-﻿using CinemaLite.Application.Services.Interfaces.Auth;
+﻿using System.Security.Claims;
+using CinemaLite.Application.Services.Interfaces.Auth;
 using Microsoft.AspNetCore.Http;
 
 namespace CinemaLite.Application.Services.Implementations.Auth;
@@ -6,12 +7,16 @@ namespace CinemaLite.Application.Services.Implementations.Auth;
 public class CurrentUserService : ICurrentUserService
 {
     public int UserId { get; }
+    public string UserPhone { get; }
+    public string UserEmail { get; }
 
     public CurrentUserService(IHttpContextAccessor accessor)
     {
         var user = accessor.HttpContext?.User;
         
         var id = user?.FindFirst("id")?.Value;
+        var userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
+        var phoneNumber = user?.FindFirst("phoneNumber")?.Value;
         
         if (id == null)
         {
@@ -24,5 +29,7 @@ public class CurrentUserService : ICurrentUserService
         }
         
         UserId = userId;
+        UserPhone = phoneNumber;
+        UserEmail = userEmail;
     }
 }

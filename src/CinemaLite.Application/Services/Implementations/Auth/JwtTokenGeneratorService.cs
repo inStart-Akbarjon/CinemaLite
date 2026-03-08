@@ -16,6 +16,7 @@ public class JwtTokenGeneratorService(IConfiguration configuration) : IJwtTokenG
         {
             new Claim("id",  user.Id.ToString()),
             new Claim("email",  user.Email),
+            new Claim("phoneNumber",  user.PhoneNumber),
             new Claim(ClaimTypes.Role, role)
         };
 

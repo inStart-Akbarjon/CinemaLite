@@ -5,6 +5,8 @@ public class Ticket : BaseEntity
     public required int UserId { get; set; }
     public required Guid MovieId { get; set; }
     public required Guid SessionId { get; set; }
+    public required string UserPhone { get; set; }
+    public required string UserEmail { get; set; }
     public required string MovieTitle { get; set; }
     public required string CinemaName { get; set; }
     public required int SeatRow { get; set; }
