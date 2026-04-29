@@ -1,9 +1,11 @@
 using CinemaLite.Api.Extensions;
 using CinemaLite.Api.Middlewares;
+using CinemaLite.Application.Common.Stripe;
 using CinemaLite.Application.Extensions.Auth;
 using CinemaLite.Application.Extensions.Common;
 using CinemaLite.Infrastructure.BackgroundServices;
 using CinemaLite.Infrastructure.Database.Extensions;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddSwaggerConfiguration();
 builder.Services.AddHostedService<ExpireSessionWorker>();
 builder.Services.AddHostedService<ExpireTopMoviesWorker>();
 builder.Services.AddHostedService<UserReminderWorker>();
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<StripeSettings>>().Value);
 
 var app = builder.Build();
 

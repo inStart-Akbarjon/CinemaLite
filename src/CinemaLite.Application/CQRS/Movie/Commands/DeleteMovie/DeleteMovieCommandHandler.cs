@@ -26,7 +26,7 @@ public class DeleteMovieCommandHandler(
         
         movie.SoftDelete();
         
-        await  dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
         
         await redis.InvalidateAsync(MoviesCacheKeys.Registry);
         

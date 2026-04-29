@@ -1,4 +1,4 @@
-﻿using CinemaLite.Application.CQRS.Ticket.Command.CreateTicket;
+﻿using CinemaLite.Application.CQRS.Cart.Commands.AddToCart;
 using CinemaLite.Application.DTOs.Ticket.Response;
 using CinemaLite.Domain.Models;
 
@@ -7,15 +7,14 @@ namespace CinemaLite.Application.Interfaces.Mappers;
 public interface ITicketMapper
 {
     public Ticket ToTicketEntity(
-        CreateTicketCommand request, 
+        AddToCartCommand request, 
         Movie movie, 
         Session session, 
         Seat seat, 
-        int userId, 
+        int UserId, 
+        Guid CartId, 
         string userPhone, 
         string userEmail);
-    
-    public CreateTicketResponse ToCreateTicketResponse(Ticket request);
     
     public GetUserTicketsResponse ToGetUserTicketsResponse(List<Ticket> tickets);
 }

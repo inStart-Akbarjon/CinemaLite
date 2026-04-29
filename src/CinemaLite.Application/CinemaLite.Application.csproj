@@ -14,6 +14,9 @@
     <ItemGroup>
       <Folder Include="CQRS\Auth\" />
       <Folder Include="DTOs\Auth\" />
+      <Folder Include="DTOs\Payment\Request\" />
+      <Folder Include="DTOs\SeatReservation\Request\" />
+      <Folder Include="DTOs\SeatReservation\Response\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +31,7 @@
       <PackageReference Include="RedLock.net" Version="2.3.2" />
       <PackageReference Include="Resend" Version="0.2.1" />
       <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+      <PackageReference Include="Stripe.net" Version="51.0.0" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
     </ItemGroup>
 

@@ -12,9 +12,9 @@ namespace CinemaLite.Application.CQRS.Movie.Queries.GetAllMovies;
 
 public class GetAllMoviesQueryHandler(
     IAppDbContext dbContext, 
-    IMovieCacheService movieCacheService) : IRequestHandler<GetAllMoviesQuery, PaginatedMovieList<GetAllMoviesResponse>>
+    IMovieCacheService movieCacheService) : IRequestHandler<GetAllMoviesQuery, PaginatedQueryList<GetAllMoviesResponse>>
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
     {
         var cacheKey = MoviesCacheKeys.Page(request.PageNumber, request.PageSize);
         

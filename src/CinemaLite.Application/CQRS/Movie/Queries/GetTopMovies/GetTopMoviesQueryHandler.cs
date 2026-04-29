@@ -13,9 +13,9 @@ namespace CinemaLite.Application.CQRS.Movie.Queries.GetTopMovies;
 public class GetTopMoviesQueryHandler(
     IAppDbContext dbContext, 
     ITopMovieCacheService topMovieCacheService) 
-    : IRequestHandler<GetTopMoviesQuery, PaginatedMovieList<GetTopMoviesResponse>>
+    : IRequestHandler<GetTopMoviesQuery, PaginatedQueryList<GetTopMoviesResponse>>
 {
-    public async Task<PaginatedMovieList<GetTopMoviesResponse>> Handle(
+    public async Task<PaginatedQueryList<GetTopMoviesResponse>> Handle(
         GetTopMoviesQuery request, 
         CancellationToken cancellationToken)
     {

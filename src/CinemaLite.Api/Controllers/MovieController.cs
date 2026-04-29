@@ -20,25 +20,25 @@ namespace CinemaLite.Api.Controllers;
 public class MovieController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetAllMovies([FromQuery] GetAllMoviesQuery request, CancellationToken cancellationToken) 
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>> GetAllMovies([FromQuery] GetAllMoviesQuery request, CancellationToken cancellationToken) 
     {
         return await mediator.Send(request, cancellationToken);
     }
     
     [HttpGet("top")]
-    public async Task<PaginatedMovieList<GetTopMoviesResponse>> GetTopMovies([FromQuery] GetTopMoviesQuery request, CancellationToken cancellationToken) 
+    public async Task<PaginatedQueryList<GetTopMoviesResponse>> GetTopMovies([FromQuery] GetTopMoviesQuery request, CancellationToken cancellationToken) 
     {
         return await mediator.Send(request, cancellationToken);
     }
     
     [HttpGet("unpublished")]
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> GetUnpublishedMovies([FromQuery] GetUnpublishedMoviesQuery request, CancellationToken cancellationToken) 
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>> GetUnpublishedMovies([FromQuery] GetUnpublishedMoviesQuery request, CancellationToken cancellationToken) 
     {
         return await mediator.Send(request, cancellationToken);
     }
     
     [HttpGet("search")]
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> SearchMovies([FromQuery] SearchRequest request, CancellationToken cancellationToken) 
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>> SearchMovies([FromQuery] SearchRequest request, CancellationToken cancellationToken) 
     {
         var query = new SearchMoviesQuery(
             request.SearchTerm,

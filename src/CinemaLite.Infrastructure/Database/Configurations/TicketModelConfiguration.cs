@@ -13,7 +13,6 @@ public class TicketModelConfiguration : IEntityTypeConfiguration<Ticket>
         builder.HasKey(t => t.Id);
         
         // Required Properties
-        builder.Property(t => t.UserId).IsRequired();
         builder.Property(t => t.MovieId).IsRequired();
         builder.Property(t => t.SessionId).IsRequired();
         builder.Property(t => t.MovieTitle).IsRequired();

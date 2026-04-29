@@ -8,6 +8,6 @@ public record SearchMoviesQuery(
     string SearchTerm,
     int PageNumber, 
     int PageSize
-) : IRequest<PaginatedMovieList<GetAllMoviesResponse>>
+) : IRequest<PaginatedQueryList<GetAllMoviesResponse>>
 {
 }
