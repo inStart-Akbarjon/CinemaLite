@@ -28,7 +28,7 @@ public class AddTicketToCartCommandHandler(
     {
         var userId = currentUserService.UserId;
 
-        var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.CustomerId == userId, cancellationToken);
+        var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.CustomerId == userId && c.DeletedAt == null, cancellationToken);
 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
 

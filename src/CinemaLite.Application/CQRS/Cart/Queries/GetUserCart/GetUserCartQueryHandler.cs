@@ -17,7 +17,9 @@ public class GetUserCartQueryHandler(
     {
         var userId = currentUserService.UserId;
         
-        var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.CustomerId == userId, cancellationToken);
+        var cart = await dbContext.Carts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.CustomerId == userId && c.DeletedAt == null, cancellationToken);
 
         if (cart is null)
         {

@@ -12,7 +12,10 @@ public class GetItemsFromOrderQueryHandler(
 {
     public async Task<GetItemsFromOrderResponse> Handle(GetItemsFromOrderQuery request, CancellationToken cancellationToken)
     {
-        var seatReservations = await dbContext.SeatReservations.Where(o => o.OrderId == request.OrderId).ToListAsync(cancellationToken);
+        var seatReservations = await dbContext.SeatReservations
+            .Where(o => o.OrderId == request.OrderId)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
         
         return orderMapper.ToGetItemsFromOrderResponse(seatReservations);
     }

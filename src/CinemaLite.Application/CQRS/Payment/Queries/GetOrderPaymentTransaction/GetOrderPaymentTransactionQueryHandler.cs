@@ -10,9 +10,9 @@ public class GetOrderPaymentTransactionQueryHandler(IAppDbContext dbContext) : I
 {
     public async Task<GetOrderPaymentTransactionResponse> Handle(GetOrderPaymentTransactionQuery request, CancellationToken cancellationToken)
     {
-        var transaction =
-            await dbContext.PaymentTransactions.FirstOrDefaultAsync(p => p.OrderId == request.OrderId,
-                cancellationToken);
+        var transaction = await dbContext.PaymentTransactions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.OrderId == request.OrderId, cancellationToken);
 
         if (transaction == null)
         {

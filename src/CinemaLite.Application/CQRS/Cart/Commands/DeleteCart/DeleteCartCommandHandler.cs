@@ -14,13 +14,14 @@ public class DeleteCartCommandHandler(IAppDbContext dbContext, IOpenSeatsStatus 
 
         try
         {
-            var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.Id == request.CartId, cancellationToken);
+            var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.Id == request.CartId && c.DeletedAt == null, cancellationToken);
             
             await openSeatsStatus.OpenSeatsStatusFromCart(request.CartId, cancellationToken);
 
             if (cart != null)
             {
-                dbContext.Carts.Remove(cart);
+                cart.SoftDelete();
+                dbContext.Carts.Update(cart);
             }
             
             await dbContext.SaveChangesAsync(cancellationToken);

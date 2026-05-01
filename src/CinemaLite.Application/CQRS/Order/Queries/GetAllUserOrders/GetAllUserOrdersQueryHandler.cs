@@ -4,6 +4,7 @@ using CinemaLite.Application.Extensions.Pagination;
 using CinemaLite.Application.Interfaces.DbContext;
 using CinemaLite.Application.Services.Interfaces.Auth;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Order.Queries.GetAllUserOrders;
 
@@ -17,6 +18,7 @@ public class GetAllUserOrdersQueryHandler(
         
         var orders = await dbContext.Orders
             .Where(o => o.CustomerId == userid && (!request.Status.HasValue || o.Status == request.Status))
+            .AsNoTracking()
             .ToGetAllUserOrdersResponse()
             .PaginateAsync(request.PageNumber, request.PageSize, cancellationToken);
         

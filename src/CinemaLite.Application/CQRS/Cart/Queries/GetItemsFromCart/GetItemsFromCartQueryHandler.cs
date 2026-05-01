@@ -15,6 +15,7 @@ public class GetItemsFromCartQueryHandler(
     {
         var seatReservations = await dbContext.SeatReservations
             .Where(s => s.CartId == request.CartId)
+            .AsNoTracking()
             .ToListAsync(cancellationToken);
 
         if (seatReservations is null)

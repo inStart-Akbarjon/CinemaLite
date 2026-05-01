@@ -25,7 +25,9 @@ public class CartController(IMediator mediator) : ControllerBase
     
     [Authorize]
     [HttpGet("{cartId}/seat-reservations")]
-    public async Task<GetItemsFromCartResponse> GetSeatReservationsFromCart([FromRoute] Guid cartId, CancellationToken cancellationToken) 
+    public async Task<GetItemsFromCartResponse> GetSeatReservationsFromCart(
+        [FromRoute] Guid cartId, 
+        CancellationToken cancellationToken) 
     {
         var query = new GetItemsFromCartQuery(cartId);
         return await mediator.Send(query, cancellationToken);
@@ -33,7 +35,11 @@ public class CartController(IMediator mediator) : ControllerBase
     
     [Authorize]
     [HttpPost("{movieId}/sessions/{sessionId}")]
-    public async Task<AddSeatReservationToCartResponse> AddSeatReservationToCart([FromRoute] Guid movieId, [FromRoute] Guid sessionId, [FromBody] AddTicketToCartRequest toCartRequest, CancellationToken cancellationToken) 
+    public async Task<AddSeatReservationToCartResponse> AddSeatReservationToCart(
+        [FromRoute] Guid movieId, 
+        [FromRoute] Guid sessionId, 
+        [FromBody] AddTicketToCartRequest toCartRequest, 
+        CancellationToken cancellationToken) 
     {
         var command = new AddToCartCommand(
             movieId,
@@ -46,7 +52,10 @@ public class CartController(IMediator mediator) : ControllerBase
     
     [Authorize]
     [HttpDelete("{cartId}/seat-reservations/{seatReservationId}")]
-    public async Task<IActionResult> DeleteSeatReservationFromCart([FromRoute] Guid cartId, [FromRoute] Guid seatReservationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteSeatReservationFromCart(
+        [FromRoute] Guid cartId, 
+        [FromRoute] Guid seatReservationId, 
+        CancellationToken cancellationToken)
     {
         var command = new DeleteFromCartCommand(
             cartId,
@@ -57,7 +66,9 @@ public class CartController(IMediator mediator) : ControllerBase
     
     [Authorize]
     [HttpDelete("{cartId}")]
-    public async Task<IActionResult> DeleteCart([FromRoute] Guid cartId, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteCart(
+        [FromRoute] Guid cartId, 
+        CancellationToken cancellationToken)
     {
         var command = new DeleteCartCommand(
             cartId);

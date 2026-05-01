@@ -10,7 +10,9 @@ public class GetUserOrderByIdQueryHandler(IAppDbContext dbContext) : IRequestHan
 {
     public async Task<GetUserOrderByIdResponse> Handle(GetUserOrderByIdQuery request, CancellationToken cancellationToken)
     {
-        var order = await dbContext.Orders.FirstOrDefaultAsync(o => o.Id == request.OrderId, cancellationToken);
+        var order = await dbContext.Orders
+            .AsNoTracking()
+            .FirstOrDefaultAsync(o => o.Id == request.OrderId, cancellationToken);
 
         if (order == null)
         {

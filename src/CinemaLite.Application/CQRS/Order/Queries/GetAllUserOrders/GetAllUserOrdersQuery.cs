@@ -5,6 +5,9 @@ using MediatR;
 
 namespace CinemaLite.Application.CQRS.Order.Queries.GetAllUserOrders;
 
-public record GetAllUserOrdersQuery(OrderStatus? Status, int PageNumber = 1, int PageSize = 10) : IRequest<PaginatedQueryList<GetAllUserOrdersResponse>>
+public record GetAllUserOrdersQuery(
+    OrderStatus? Status, 
+    int PageNumber = 1, 
+    int PageSize = 10) : IRequest<PaginatedQueryList<GetAllUserOrdersResponse>>
 {
 }
