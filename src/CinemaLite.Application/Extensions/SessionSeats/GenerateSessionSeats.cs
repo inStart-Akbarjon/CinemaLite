@@ -1,4 +1,5 @@
-﻿using CinemaLite.Domain.Models;
+﻿using CinemaLite.Domain.Enums;
+using CinemaLite.Domain.Models;
 
 namespace CinemaLite.Application.Extensions.SessionSeats;
 
@@ -14,7 +15,7 @@ public static class GenerateSessionSeats
                 {
                     SeatRow = row,
                     SeatNumber = seatNum,
-                    IsBooked = false
+                    Status = SeatStatus.Open
                 });
             }
         }

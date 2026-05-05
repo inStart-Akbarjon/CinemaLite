@@ -11,6 +11,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
 {
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<SeatReservation> SeatReservations { get; set; }
+    public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

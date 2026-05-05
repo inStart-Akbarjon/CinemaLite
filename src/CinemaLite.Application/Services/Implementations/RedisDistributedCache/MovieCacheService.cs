@@ -11,19 +11,19 @@ namespace CinemaLite.Application.Services.Implementations.RedisDistributedCache;
 
 public class MovieCacheService(IDistributedCache cache, IConnectionMultiplexer redis) : IMovieCacheService
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>?> GetAllMoviesFromCacheAsync(string cacheKey)
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>?> GetAllMoviesFromCacheAsync(string cacheKey)
     {
         var cached = await cache.GetStringAsync(cacheKey);
         
         if (cached != null)
         {
-            return JsonConvert.DeserializeObject<PaginatedMovieList<GetAllMoviesResponse>?>(cached);
+            return JsonConvert.DeserializeObject<PaginatedQueryList<GetAllMoviesResponse>?>(cached);
         }
         
         return null;
     }
 
-    public async Task AddMoviesToCacheAsync(string cacheKey, PaginatedMovieList<GetAllMoviesResponse> movies)
+    public async Task AddMoviesToCacheAsync(string cacheKey, PaginatedQueryList<GetAllMoviesResponse> movies)
     {
         var options = new DistributedCacheEntryOptions()
         {

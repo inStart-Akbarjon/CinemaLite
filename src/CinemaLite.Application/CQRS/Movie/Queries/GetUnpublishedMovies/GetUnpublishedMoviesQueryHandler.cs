@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Movie.Queries.GetUnpublishedMovies;
 
-public class GetUnpublishedMoviesQueryHandler(IAppDbContext dbContext) : IRequestHandler<GetUnpublishedMoviesQuery, PaginatedMovieList<GetAllMoviesResponse>>
+public class GetUnpublishedMoviesQueryHandler(IAppDbContext dbContext) : IRequestHandler<GetUnpublishedMoviesQuery, PaginatedQueryList<GetAllMoviesResponse>>
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(GetUnpublishedMoviesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>> Handle(GetUnpublishedMoviesQuery request, CancellationToken cancellationToken)
     {
         var movies = await dbContext.Movies
             .AsNoTracking()

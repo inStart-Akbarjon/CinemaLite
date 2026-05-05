@@ -1,4 +1,6 @@
-﻿namespace CinemaLite.Domain.Models;
+﻿using CinemaLite.Domain.Enums;
+
+namespace CinemaLite.Domain.Models;
 
 public class Session : BaseEntity
 {
@@ -21,5 +23,5 @@ public class Seat
 {
     public int SeatRow { get; set; } 
     public int SeatNumber { get; set; }
-    public bool IsBooked { get; set; }
+    public SeatStatus Status { get; set; }
 }

@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CinemaLite.Application.CQRS.Movie.Queries.SearchMovies;
 
-public class SearchMoviesQueryHandler(IAppDbContext dbContext) : IRequestHandler<SearchMoviesQuery, PaginatedMovieList<GetAllMoviesResponse>>
+public class SearchMoviesQueryHandler(IAppDbContext dbContext) : IRequestHandler<SearchMoviesQuery, PaginatedQueryList<GetAllMoviesResponse>>
 {
-    public async Task<PaginatedMovieList<GetAllMoviesResponse>> Handle(SearchMoviesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedQueryList<GetAllMoviesResponse>> Handle(SearchMoviesQuery request, CancellationToken cancellationToken)
     {
         var lowerCaseTerm = request.SearchTerm.ToLower().Trim();
         

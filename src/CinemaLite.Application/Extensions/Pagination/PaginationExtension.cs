@@ -1,5 +1,7 @@
 ﻿using CinemaLite.Application.DTOs.Movie.Response;
+using CinemaLite.Application.DTOs.Order.Response;
 using CinemaLite.Application.DTOs.Pagination;
+using CinemaLite.Domain.Enums;
 using CinemaLite.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +9,7 @@ namespace CinemaLite.Application.Extensions.Pagination;
 
 public static class PaginationExtension
 {
-    public static async Task<PaginatedMovieList<T>> PaginateAsync<T>(
+    public static async Task<PaginatedQueryList<T>> PaginateAsync<T>(
         this IQueryable<T> queryable, 
         int pageNumber,
         int pageSize,
@@ -19,9 +21,9 @@ public static class PaginationExtension
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);
 
-        return new PaginatedMovieList<T>()
+        return new PaginatedQueryList<T>()
         {
-            Movies = paginatedItems,
+            Items = paginatedItems,
             PageNumber = pageNumber + 1,
             PageSize = pageSize,
             HasNextPage = paginatedItems.Count == pageSize,
@@ -64,5 +66,20 @@ public static class PaginationExtension
             });
 
         return topMoviesResponses;
+    }
+    
+    public static IQueryable<GetAllUserOrdersResponse> ToGetAllUserOrdersResponse(
+        this IQueryable<Order> queryable)
+    {
+        var orderResponse = queryable.Select(x =>
+            new GetAllUserOrdersResponse()
+            {
+                Id = x.Id,
+                CustomerId = x.CustomerId,
+                TotalPrice = x.TotalPrice,
+                Status = x.Status,
+            });
+
+        return orderResponse;
     }
 }

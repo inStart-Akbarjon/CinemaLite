@@ -5,6 +5,6 @@ namespace CinemaLite.Application.Services.Interfaces.RedisDistributedCache;
 
 public interface ITopMovieCacheService
 {
-    Task<PaginatedMovieList<GetTopMoviesResponse>?> GetTopMoviesFromCacheAsync(string cacheKey);
-    Task AddTopMoviesToCacheAsync(string cacheKey, PaginatedMovieList<GetTopMoviesResponse> movies);
+    Task<PaginatedQueryList<GetTopMoviesResponse>?> GetTopMoviesFromCacheAsync(string cacheKey);
+    Task AddTopMoviesToCacheAsync(string cacheKey, PaginatedQueryList<GetTopMoviesResponse> movies);
 }

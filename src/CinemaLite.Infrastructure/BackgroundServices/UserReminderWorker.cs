@@ -47,7 +47,7 @@ public class UserReminderWorker(
             
                 async Task SendReminder(Ticket ticket, string message)
                 {
-                    await publishEndpoint.Publish(new UserEmailReminderEvent
+                    await publishEndpoint.Publish(new EmailNotificationEvent
                     {
                         UserEmail = ticket.UserEmail,
                         Message = message,
