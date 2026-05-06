@@ -28,7 +28,7 @@ public class OpenSeatsStatus(IAppDbContext dbContext) : IOpenSeatsStatus
                 .FirstOrDefault(s => s.Id == seatReservation.SessionId && s.DeletedAt == null);
             
             var seat = session?.Seats.FirstOrDefault(s =>
-                s.SeatNumber == seatReservation.SeatNumber && s.SeatRow == seatReservation.SeatRow);
+                s.Id == seatReservation.SeatId);
 
             if (seat != null)
             {
@@ -65,7 +65,7 @@ public class OpenSeatsStatus(IAppDbContext dbContext) : IOpenSeatsStatus
                 .FirstOrDefault(s => s.Id == seatReservation.SessionId && s.DeletedAt == null);
             
             var seat = session?.Seats.FirstOrDefault(s =>
-                s.SeatNumber == seatReservation.SeatNumber && s.SeatRow == seatReservation.SeatRow);
+                s.Id == seatReservation.SeatId);
             
             if (seat != null)
             {

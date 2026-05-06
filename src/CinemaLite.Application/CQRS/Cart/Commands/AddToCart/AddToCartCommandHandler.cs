@@ -53,15 +53,15 @@ public class AddTicketToCartCommandHandler(
                 throw new NotFoundSessionException(request.SessionId);
             }
 
-            var seat = session.Seats.FirstOrDefault(s =>
-                s.SeatNumber == request.SeatNumber && s.SeatRow == request.SeatRow);
+            var seat = session.Seats.FirstOrDefault(s=>
+                s.Id == request.SeatId);
 
             if (seat is null)
             {
-                throw new NotFoundSeatException(request.SeatRow, request.SeatNumber);
+                throw new NotFoundSeatException(seat.SeatRow, seat.SeatNumber);
             }
 
-            var lockKey = $"lock:seat:{request.SessionId}:{request.SeatRow}:{request.SeatNumber}";
+            var lockKey = $"lock:seat:{request.SessionId}:{seat.SeatRow}:{seat.SeatNumber}";
 
             using var seatLock = await distributedLockService.AcquireAsync(
                 lockKey,
@@ -70,17 +70,17 @@ public class AddTicketToCartCommandHandler(
 
             if (seatLock is null)
             {
-                throw new ConcurrentBookingException(request.SeatRow, request.SeatNumber);
+                throw new ConcurrentBookingException(seat.SeatRow, seat.SeatNumber);
             }
 
             if (seat.Status == SeatStatus.Booked)
             {
-                throw new BookedSeatException(request.SeatRow, request.SeatNumber);
+                throw new BookedSeatException(seat.SeatRow, seat.SeatNumber);
             }
             
             if (seat.Status == SeatStatus.Reserved)
             {
-                throw new ReservedSeatException(request.SeatRow, request.SeatNumber);
+                throw new ReservedSeatException(seat.SeatRow, seat.SeatNumber);
             }
 
             seat.Status = SeatStatus.Reserved;

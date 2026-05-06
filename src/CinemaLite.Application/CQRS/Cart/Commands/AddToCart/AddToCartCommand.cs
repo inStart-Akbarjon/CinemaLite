@@ -6,8 +6,7 @@ namespace CinemaLite.Application.CQRS.Cart.Commands.AddToCart;
 public record AddToCartCommand(
     Guid MovieId,
     Guid SessionId,
-    int SeatRow,
-    int SeatNumber
+    Guid SeatId
 ) : IRequest<AddSeatReservationToCartResponse>
 {
 }

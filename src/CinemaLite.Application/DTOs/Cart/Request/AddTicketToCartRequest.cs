@@ -1,7 +1,8 @@
-﻿namespace CinemaLite.Application.DTOs.Cart.Request;
+﻿using System.Security.AccessControl;
+
+namespace CinemaLite.Application.DTOs.Cart.Request;
 
 public class AddTicketToCartRequest
 {
-    public int SeatRow { get; set; }
-    public int SeatNumber { get; set; }
+    public Guid SeatId { get; set; }
 }
