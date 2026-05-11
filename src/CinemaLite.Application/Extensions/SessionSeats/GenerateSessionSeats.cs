@@ -13,7 +13,6 @@ public static class GenerateSessionSeats
             {
                 seats.Add(new Seat
                 {
-                    Id = Guid.NewGuid(),
                     SeatRow = row,
                     SeatNumber = seatNum,
                     Status = SeatStatus.Open

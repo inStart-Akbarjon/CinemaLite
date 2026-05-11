@@ -21,7 +21,7 @@ public class Session : BaseEntity
 
 public class Seat
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public int SeatRow { get; set; } 
     public int SeatNumber { get; set; }
     public SeatStatus Status { get; set; }
