@@ -38,14 +38,13 @@ public class CartController(IMediator mediator) : ControllerBase
     public async Task<AddSeatReservationToCartResponse> AddSeatReservationToCart(
         [FromRoute] Guid movieId, 
         [FromRoute] Guid sessionId, 
-        [FromBody] AddTicketToCartRequest toCartRequest, 
-        CancellationToken cancellationToken) 
+        [FromBody] AddTicketToCartRequest request,
+        CancellationToken cancellationToken)
     {
         var command = new AddToCartCommand(
             movieId,
             sessionId,
-            toCartRequest.SeatRow, 
-            toCartRequest.SeatNumber);
+            request.SeatId);
         
         return await mediator.Send(command, cancellationToken);
     }

@@ -23,6 +23,7 @@ public class SeatReservationMapper : ISeatReservationMapper
             CinemaName = session.CinemaName,
             StartTime = session.StartTime,
             PricePaid = session.Price,
+            SeatId = seat.Id,
             SeatRow = seat.SeatRow,
             SeatNumber = seat.SeatNumber
         };
