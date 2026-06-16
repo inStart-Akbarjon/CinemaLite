@@ -35,9 +35,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAc
                 .User
                 .FindFirstValue(ClaimTypes.Email) ?? "System";
 
-            var entityId = (Guid)modifiedEntity
+            var entityId = modifiedEntity
                 .Property("Id")
-                .CurrentValue!;
+                .CurrentValue?
+                .ToString() ?? "";
 
             if (modifiedEntity.State == EntityState.Added)
             {

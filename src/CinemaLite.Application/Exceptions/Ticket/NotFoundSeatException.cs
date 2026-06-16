@@ -11,4 +11,10 @@ public class NotFoundSeatException : AppException
         errorCode: "Seat Not Found!")
     {
     }
+    public NotFoundSeatException(Guid seatId) : base(
+        message: $"The seat with seat ID: {seatId} not Found.",
+        statusCode: StatusCodes.Status404NotFound,
+        errorCode: "Seat Not Found!")
+    {
+    }
 }
