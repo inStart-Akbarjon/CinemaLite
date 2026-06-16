@@ -10,5 +10,5 @@ public class AuditLog
     public AuditLogAction Action { get; set; }
     public string ChangedBy { get; set; }
     public DateTime ChangedAt { get; set; }
-    public List<AuditLogDetails> AuditLogDetails { get; set; }
+    public List<AuditLogDetails> AuditLogDetails { get; set; } = [];
 }

@@ -11,7 +11,7 @@ public class AuditLogModelConfiguration : IEntityTypeConfiguration<AuditLog>
         builder.ToTable("AuditLog");
         
         builder.HasKey(x => x.Id);
-
+        
         builder.Property(x => x.AuditLogDetails)
             .HasColumnType("jsonb");
     }
