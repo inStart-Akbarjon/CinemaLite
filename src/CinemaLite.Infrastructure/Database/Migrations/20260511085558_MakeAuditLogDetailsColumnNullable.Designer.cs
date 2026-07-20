@@ -5,6 +5,7 @@ using CinemaLite.Domain.Models;
 using CinemaLite.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -13,9 +14,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CinemaLite.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260511085558_MakeAuditLogDetailsColumnNullable")]
+    partial class MakeAuditLogDetailsColumnNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,9 +114,8 @@ namespace CinemaLite.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("EntityId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("TableName")
                         .IsRequired()
@@ -315,9 +317,6 @@ namespace CinemaLite.Infrastructure.Migrations
 
                     b.Property<decimal>("PricePaid")
                         .HasColumnType("numeric");
-
-                    b.Property<Guid>("SeatId")
-                        .HasColumnType("uuid");
 
                     b.Property<int>("SeatNumber")
                         .HasColumnType("integer");

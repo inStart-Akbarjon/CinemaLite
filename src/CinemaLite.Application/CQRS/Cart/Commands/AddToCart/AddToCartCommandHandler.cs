@@ -58,7 +58,7 @@ public class AddTicketToCartCommandHandler(
 
             if (seat is null)
             {
-                throw new NotFoundSeatException(seat.SeatRow, seat.SeatNumber);
+                throw new NotFoundSeatException(request.SeatId);
             }
 
             var lockKey = $"lock:seat:{request.SessionId}:{seat.SeatRow}:{seat.SeatNumber}";
