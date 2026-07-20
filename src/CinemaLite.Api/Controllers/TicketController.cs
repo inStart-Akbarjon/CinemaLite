@@ -1,4 +1,5 @@
-﻿using CinemaLite.Application.CQRS.Ticket.Queries.GetUserTickets;
+﻿using CinemaLite.Application.CQRS.Ticket.Commands.RefundTicket;
+using CinemaLite.Application.CQRS.Ticket.Queries.GetUserTickets;
 using CinemaLite.Application.DTOs.Ticket.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,5 +17,13 @@ public class TicketController(IMediator mediator) : ControllerBase
     {
         var query = new GetUserTicketsQuery();
         return await mediator.Send(query, cancellationToken);
+    }
+    
+    [Authorize]
+    [HttpPost("{ticketId}/refunds")]
+    public async Task<RefundTicketResponse> RefundUserTicket([FromRoute] Guid ticketId, CancellationToken cancellationToken) 
+    {
+        var command = new RefundTicketCommand(ticketId);
+        return await mediator.Send(command, cancellationToken);
     }
 }

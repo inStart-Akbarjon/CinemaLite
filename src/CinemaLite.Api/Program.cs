@@ -22,7 +22,9 @@ builder.AddRabbitMq();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddHostedService<ExpireSessionWorker>();
 builder.Services.AddHostedService<ExpireTopMoviesWorker>();
+builder.Services.AddHostedService<ExpireTicketWorker>();
 builder.Services.AddHostedService<UserReminderWorker>();
+builder.Services.AddHostedService<TicketPricingWorker>();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<StripeSettings>>().Value);
 
